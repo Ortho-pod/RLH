@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>OrthoGoogle</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+  <style>
+    body {
+      font-family: 'Poppins', Arial, sans-serif;
+      padding: 2rem;
+      background: #f2f2f2;
+      text-align: center;
+    }
+    h2 {
+      font-family: 'Poppins', sans-serif;
+      font-size: 2.8rem;
+      margin-bottom: 20px;
+    }
+    h2 span {
+      font-weight: bold;
+    }
+
+    .search-container {
+      position: relative;
+      display: inline-block;
+      width: 50%;
+      max-width: 500px;
+    }
+
+    input[type="text"] {
+      padding: 1.2rem 3.5rem 1.2rem 2.8rem;
+      font-size: 1.3rem;
+      border-radius: 24px;
+      border: 1px solid #dcdcdc;
+      width: 100%;
+      box-sizing: border-box;
+    }
+
+    #searchBtn {
+      position: absolute;
+      left: 10px;
+      top: 50%;
+      transform: translateY(-50%);
+      border: none;
+      background: none;
+      cursor: pointer;
+      padding: 0;
+    }
+
+    #searchBtn svg {
+      fill: #777;
+    }
+
+    .filter-btn {
+      background-color: #e8e8e8;
+      border: none;
+      padding: 0.7rem 1.2rem;
+      margin: 0.3rem;
+      border-radius: 20px;
+      font-size: 0.95rem;
+      cursor: pointer;
+      transition: background-color 0.3s, color 0.3s;
+      color: #333;
+    }
+
+    .filter-btn:hover {
+      background-color: #d2d2d2;
+    }
+
+    .filter-btn.active {
+      background-color: #4285f4;
+      color: white;
+    }
+
+    .result {
+      background: white;
+      padding: 1.2rem;
+      border-radius: 10px;
+      margin: 1rem auto;
+      width: 80%;
+      max-width: 500px;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+      text-align: left;
+    }
+
+    .instrument-link {
+      font-weight: bold;
+      text-decoration: none;
+      color: #4285f4;
+    }
+
+    .instrument-link:hover {
+      text-decoration: underline;
+    }
+  </style>
+</head>
+<body>
+
+  <h2>
+    <span style="color:#DB4437">R</span>
+    <span style="color:#0F9D58">L</span>
+    <span style="color:#4285F4">H</span>
+    &nbsp;
+    <span style="color:#4285F4">O</span>
+    <span style="color:#DB4437">r</span>
+    <span style="color:#F4B400">t</span>
+    <span style="color:#0F9D58">h</span>
+    <span style="color:#4285F4">o</span>
+    <span style="color:#DB4437">G</span>
+    <span style="color:#F4B400">o</span>
+    <span style="color:#0F9D58">o</span>
+    <span style="color:#4285F4">g</span>
+    <span style="color:#DB4437">l</span>
+    <span style="color:#F4B400">e</span>
+  </h2>
+
+  <div class="search-container">
+    <input type="text" id="searchBar" placeholder="Search Instrument..." />
+    <button id="searchBtn">
+      <svg xmlns="http://www.w3.org/2000/svg" height="20" width="20" viewBox="0 0 24 24">
+        <path d="M15.5 14h-.79l-.28-.27A6.471 6.471 0 0016 9.5 6.5 6.5 0 109.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l4.25 4.25 1.5-1.5L15.5 14zm-6 0C8.01 14 6 11.99 6 9.5S8.01 5 10.5 5 15 7.01 15 9.5 12.99 14 10.5 14z"/>
+      </svg>
+    </button>
+  </div>
+
+  <div id="filters" style="margin-top: 1rem; margin-bottom: 2rem;">
+    <button class="filter-btn" data-field="Item">Search by Item</button>
+    <button class="filter-btn" data-field="ItemReference">Search by Item Reference</button>
+    <button class="filter-btn" data-field="TrayInclusionProductCategory">Search by Tray Inclusion / Product Category</button>
+    <button class="filter-btn" data-field="TrayReference">Search by Tray Reference</button>
+  </div>
+
+  <div id="results">Loading inventory...</div>
+
+  <script>
+    const firebaseUrl = "https://ortho-61f64-default-rtdb.firebaseio.com/instruments.json";
+    let inventory = [];
+
+    const searchBar = document.getElementById('searchBar');
+    const searchBtn = document.getElementById('searchBtn');
+    const resultsDiv = document.getElementById('results');
+    let activeField = null;
+
+    document.querySelectorAll('.filter-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        activeField = btn.dataset.field;
+        searchInventory();
+      });
+    });
+
+    function sanitizeFilename(name) {
+      return name.replace(/[^a-z0-9]/gi, '_').toLowerCase();
+    }
+
+    function searchInventory() {
+      const query = searchBar.value.toLowerCase().trim();
+      resultsDiv.innerHTML = '';
+      if (query === '') return;
+
+      const filtered = inventory.filter(item => {
+        const searchValue = query.toLowerCase();
+
+        if (activeField && item[activeField]) {
+          return (item[activeField] || '').toLowerCase().includes(searchValue);
+        } else {
+          const haystack = [
+            (item.Item || '').toLowerCase(),
+            (item.ItemReference || '').toLowerCase(),
+            (item.TrayInclusionProductCategory || '').toLowerCase(),
+            (item.TrayReference || '').toLowerCase()
+          ];
+          return haystack.some(field => field.includes(searchValue));
+        }
+      });
+
+      renderResults(filtered, query);
+    }
+
+    function renderResults(items, query) {
+      if (items.length === 0) {
+        resultsDiv.innerHTML = 'No matching instruments found.';
+        return;
+      }
+
+      items.forEach(item => {
+        const div = document.createElement('div');
+        div.className = 'result';
+        let html = '';
+
+        html += `<strong>Item:</strong> ${item.Item} <br />
+                 <strong>Item Reference:</strong> ${item.ItemReference} <br />
+                 <strong>Tray Inclusion/Product Category:</strong> ${item.TrayInclusionProductCategory} <br />
+                 <strong>Tray Reference:</strong> ${item.TrayReference} <br />
+                 <strong>Stock Level:</strong> ${item.StockLevel} <br />
+                 <strong>Total Count:</strong> ${item.TotalCount} <br />
+                 <strong>Storage Location:</strong> ${item.StorageLocation} <br />`;
+
+        // Modify the link to pass the category as a query parameter
+        if (item.TrayInclusionProductCategory) {
+          html += `<a href="instrument-checklist.html?category=${encodeURIComponent(item.TrayInclusionProductCategory)}" class="instrument-link" target="_blank">Instrument Checklist</a>`;
+        }
+
+        div.innerHTML = html;
+        resultsDiv.appendChild(div);
+      });
+    }
+
+    function fetchInventory() {
+      fetch(firebaseUrl)
+        .then(response => response.json())
+        .then(data => {
+          inventory = Object.values(data || {});
+          resultsDiv.innerHTML = '';
+        })
+        .catch(error => {
+          resultsDiv.innerHTML = 'Error loading inventory.';
+          console.error("Firebase fetch error:", error);
+        });
+    }
+
+    searchBtn.addEventListener('click', searchInventory);
+    searchBar.addEventListener('keydown', function(e) {
+      if (e.key === 'Enter') searchInventory();
+    });
+    searchBar.addEventListener('input', function() {
+      if (this.value.trim() === '') resultsDiv.innerHTML = '';
+    });
+
+    // Load data on page load
+    fetchInventory();
+  </script>
+
+</body>
+</html>
