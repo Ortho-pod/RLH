@@ -17,7 +17,7 @@
       color: #333;
     }
 
-    a {
+    .link {
       display: block;
       margin: 1rem auto;
       text-decoration: none;
@@ -30,7 +30,7 @@
       transition: background 0.2s;
     }
 
-    a:hover {
+    .link:hover {
       background: #d4d4d4;
     }
 
@@ -47,14 +47,38 @@
 </head>
 <body>
   <h1>Tool Links</h1>
-  <a href="#">Contact Directory</a>
-  <a href="#">Implant Management</a>
-  <a href="#">Purchase Order History</a>
-  <a href="#">Calendar</a>
-  <a href="#">Procedure Cards</a>
-  <a href="#">Surgical OpTechs</a>
+  <div id="linkContainer">Loading links...</div>
 
-  <a href="#" onclick="history.back();" class="back-button">← Back</a>
+  <a href="#" onclick="history.back();" class="link back-button">← Back</a>
+
+  <!-- Firebase Link Fetch -->
+  <script>
+    const firebaseLinksURL = 'https://ortho-61f64-default-rtdb.firebaseio.com/links.json';
+    const container = document.getElementById('linkContainer');
+
+    fetch(firebaseLinksURL)
+      .then(res => res.json())
+      .then(data => {
+        container.innerHTML = '';
+        if (!data || Object.keys(data).length === 0) {
+          container.innerHTML = 'No links available.';
+          return;
+        }
+
+        Object.entries(data).forEach(([label, url]) => {
+          const a = document.createElement('a');
+          a.href = url;
+          a.textContent = label;
+          a.className = 'link';
+          a.target = '_blank';
+          container.appendChild(a);
+        });
+      })
+      .catch(err => {
+        container.innerHTML = 'Failed to load links.';
+        console.error("Error fetching links:", err);
+      });
+  </script>
 
   <!-- Tawk.to Script -->
   <script type="text/javascript">
@@ -69,6 +93,5 @@
       s0.parentNode.insertBefore(s1, s0);
     })();
   </script>
-  <!-- End of Tawk.to Script -->
 </body>
 </html>
