@@ -11,7 +11,6 @@
   <link href="https://fonts.googleapis.com/css2?family=Product+Sans&display=swap" rel="stylesheet">
 
   <style>
-    /* Import Aptos font */
     @font-face {
       font-family: 'Aptos';
       src: url('https://fonts.cdnfonts.com/s/106113/Aptos.woff') format('woff');
@@ -26,7 +25,6 @@
       text-align: center;
     }
 
-    /* Useful Links Button (Top Left) */
     .top-links {
       position: absolute;
       top: 1rem;
@@ -50,7 +48,6 @@
       background-color: #dcdcdc;
     }
 
-    /* Title Styling - OrthoPod in Google colors */
     h2 {
       font-family: 'Product Sans', sans-serif;
       font-size: 3rem;
@@ -61,7 +58,6 @@
       line-height: 1.1;
     }
 
-    /* Search Bar Container */
     .search-container {
       position: relative;
       display: inline-block;
@@ -93,7 +89,6 @@
       fill: #777;
     }
 
-    /* Filter Buttons */
     .filter-btn {
       background-color: #e8e8e8;
       border: none;
@@ -140,12 +135,10 @@
 </head>
 <body>
 
-  <!-- Top Left Link -->
   <div class="top-links">
     <a href="links.html">Useful Links</a>
   </div>
 
-  <!-- Title -->
   <h2>
     <span style="color:#DB4437;">O</span>
     <span style="color:#0F9D58;">r</span>
@@ -157,7 +150,6 @@
     <span style="color:#F4B400;">d</span>
   </h2>
 
-  <!-- Search Bar -->
   <div class="search-container">
     <input type="text" id="searchBar" placeholder="Search Instrument..." />
     <button id="searchBtn">
@@ -167,7 +159,6 @@
     </button>
   </div>
 
-  <!-- Filter Buttons -->
   <div id="filters" style="margin-top: 1rem; margin-bottom: 2rem;">
     <button class="filter-btn" data-field="Item">Search by Item</button>
     <button class="filter-btn" data-field="ItemReference">Search by Item Reference</button>
@@ -175,10 +166,8 @@
     <button class="filter-btn" data-field="TrayReference">Search by Tray Reference</button>
   </div>
 
-  <!-- Results -->
   <div id="results">Loading inventory...</div>
 
-  <!-- JavaScript -->
   <script>
     const firebaseUrl = "https://ortho-61f64-default-rtdb.firebaseio.com/instruments.json";
     let inventory = [];
@@ -270,6 +259,74 @@
     });
 
     fetchInventory();
+  </script>
+
+  <!-- Tawk.to Live Chat Widget -->
+  <script>
+    (function(global){
+      global.$_Tawk_AccountKey='6816277a2a5b77190ef24bf5';
+      global.$_Tawk_WidgetId='1iqb8kdvh';
+      global.$_Tawk_Unstable=false;
+      global.$_Tawk = global.$_Tawk || {};
+      (function (w){
+        function l() {
+          if (window.$_Tawk.init !== undefined) return;
+          window.$_Tawk.init = true;
+          var files = [
+            'https://embed.tawk.to/_s/v4/app/68149a52330/js/twk-main.js',
+            'https://embed.tawk.to/_s/v4/app/68149a52330/js/twk-vendor.js',
+            'https://embed.tawk.to/_s/v4/app/68149a52330/js/twk-chunk-vendors.js',
+            'https://embed.tawk.to/_s/v4/app/68149a52330/js/twk-chunk-common.js',
+            'https://embed.tawk.to/_s/v4/app/68149a52330/js/twk-runtime.js',
+            'https://embed.tawk.to/_s/v4/app/68149a52330/js/twk-app.js'
+          ];
+
+          if (typeof Promise === 'undefined') {
+            files.unshift('https://embed.tawk.to/_s/v4/app/68149a52330/js/twk-promise-polyfill.js');
+          }
+
+          if (typeof Symbol === 'undefined' || typeof Symbol.iterator === 'undefined') {
+            files.unshift('https://embed.tawk.to/_s/v4/app/68149a52330/js/twk-iterator-polyfill.js');
+          }
+
+          if (typeof Object.entries === 'undefined') {
+            files.unshift('https://embed.tawk.to/_s/v4/app/68149a52330/js/twk-entries-polyfill.js');
+          }
+
+          if (!window.crypto) {
+            window.crypto = window.msCrypto;
+          }
+
+          if (typeof Event !== 'function') {
+            files.unshift('https://embed.tawk.to/_s/v4/app/68149a52330/js/twk-event-polyfill.js');
+          }
+
+          if (!Object.values) {
+            files.unshift('https://embed.tawk.to/_s/v4/app/68149a52330/js/twk-object-values-polyfill.js');
+          }
+
+          if (typeof Array.prototype.find === 'undefined') {
+            files.unshift('https://embed.tawk.to/_s/v4/app/68149a52330/js/twk-arr-find-polyfill.js');
+          }
+
+          var s0=document.getElementsByTagName('script')[0];
+          for (var i = 0; i < files.length; i++) {
+            var s1 = document.createElement('script');
+            s1.src= files[i];
+            s1.charset='UTF-8';
+            s1.setAttribute('crossorigin','*');
+            s0.parentNode.insertBefore(s1,s0);
+          }
+        }
+        if (document.readyState === 'complete') {
+          l();
+        } else if (w.attachEvent) {
+          w.attachEvent('onload', l);
+        } else {
+          w.addEventListener('load', l, false);
+        }
+      })(window);
+    })(window);
   </script>
 
 </body>
