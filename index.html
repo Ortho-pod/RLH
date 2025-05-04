@@ -191,7 +191,7 @@
       resultsDiv.innerHTML = '';
       if (query === '') return;
 
-      const keywords = query.split(/\s+/); // break into words
+      const keywords = query.split(/\s+/);
 
       const filtered = inventory.filter(item => {
         const fieldsToSearch = activeField
@@ -243,7 +243,7 @@
       fetch(firebaseUrl)
         .then(response => response.json())
         .then(data => {
-          inventory = Object.values(data || {});
+          inventory = data || [];
           resultsDiv.innerHTML = '';
         })
         .catch(error => {
