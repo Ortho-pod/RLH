@@ -161,9 +161,9 @@
 
   <div id="filters" style="margin-top: 1rem; margin-bottom: 2rem;">
     <button class="filter-btn" data-field="Item">Search by Item</button>
-    <button class="filter-btn" data-field="ItemReference">Search by Item Reference</button>
+    <button class="filter-btn" data-field="ItemID">Search by Item ID</button>
     <button class="filter-btn" data-field="TrayInclusionProductCategory">Search by Tray Inclusion / Product Category</button>
-    <button class="filter-btn" data-field="TrayReference">Search by Tray Reference</button>
+    <button class="filter-btn" data-field="TrayID">Search by Tray ID</button>
   </div>
 
   <div id="results">Loading inventory...</div>
@@ -198,9 +198,9 @@
           ? [(item[activeField] || '').toLowerCase()]
           : [
               (item.Item || '').toLowerCase(),
-              (item.ItemReference || '').toLowerCase(),
+              (item.ItemID || '').toLowerCase(),
               (item.TrayInclusionProductCategory || '').toLowerCase(),
-              (item.TrayReference || '').toLowerCase()
+              (item.TrayID || '').toLowerCase()
             ];
 
         return keywords.every(keyword =>
@@ -223,9 +223,9 @@
         let html = '';
 
         html += `<strong>Item:</strong> ${item.Item} <br />
-                 <strong>Item Reference:</strong> ${item.ItemReference} <br />
+                 <strong>Item ID:</strong> ${item.ItemID} <br />
                  <strong>Tray Inclusion/Product Category:</strong> ${item.TrayInclusionProductCategory} <br />
-                 <strong>Tray Reference:</strong> ${item.TrayReference} <br />
+                 <strong>Tray ID:</strong> ${item.TrayID} <br />
                  <strong>Stock Level:</strong> ${item.StockLevel} <br />
                  <strong>Total Count:</strong> ${item.TotalCount} <br />
                  <strong>Storage Location:</strong> ${item.StorageLocation} <br />`;
