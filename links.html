@@ -4,192 +4,219 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Useful Links - OrthoPod</title>
-
-  <!-- Icons -->
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
 
   <style>
     body {
-      font-family: 'Arial', sans-serif;
-      background: #f2f2f2;
       margin: 0;
+      font-family: 'Segoe UI', sans-serif;
+      background: #f8f8f8;
     }
 
     .container {
-      max-width: 400px;
+      max-width: 480px;
       margin: auto;
-      background: white;
+      background: #fff;
       min-height: 100vh;
       box-shadow: 0 2px 6px rgba(0,0,0,0.1);
-      padding-bottom: 3rem;
     }
 
-    .main-link {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
+    header {
+      background: #ffffff;
       padding: 1rem;
-      font-weight: bold;
+      text-align: center;
+      font-size: 1.4rem;
+      font-weight: 600;
       border-bottom: 1px solid #ddd;
+    }
+
+    .section {
+      border-bottom: 1px solid #eee;
+    }
+
+    .section-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 1rem;
       cursor: pointer;
+      font-weight: 600;
+      font-size: 1.05rem;
     }
 
-    .main-link .icon {
-      width: 18px;
-      height: 18px;
+    .circle-icon {
+      width: 32px;
+      height: 32px;
       border-radius: 50%;
-      margin-left: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-size: 14px;
+      margin-left: 1rem;
     }
 
-    .main-link.red .icon { background: #e63946; }
-    .main-link.blue .icon { background: #1d3557; }
-    .main-link.green .icon { background: #2a9d8f; }
-    .main-link.orange .icon { background: #f4a261; }
-    .main-link.teal .icon { background: #00b4d8; }
+    .orange { background-color: #f4a261; }
+    .blue { background-color: #457b9d; }
+    .green { background-color: #2a9d8f; }
+    .red { background-color: #e76f51; }
+    .teal { background-color: #00b4d8; }
 
-    .submenu {
+    .section-content {
       display: none;
-      padding-left: 1.5rem;
-      background: #fafafa;
-      border-left: 3px solid #ccc;
+      padding: 0 1.2rem 1rem;
+      animation: expand 0.3s ease;
     }
 
-    .submenu a {
+    .section-content a {
       display: block;
-      padding: 0.75rem 0;
+      padding: 0.6rem 0;
       text-decoration: none;
       color: #333;
-      font-size: 0.95rem;
+      font-size: 0.96rem;
     }
 
-    .submenu a:hover {
+    .section-content a:hover {
       text-decoration: underline;
     }
 
-    .toggle-arrow {
+    .chip {
+      display: inline-block;
+      padding: 0.3rem 0.6rem;
+      background: #ccc;
+      color: #333;
+      border-radius: 20px;
+      font-size: 0.8rem;
+      margin-top: 0.4rem;
+    }
+
+    @keyframes expand {
+      from { opacity: 0; transform: scaleY(0.95); }
+      to { opacity: 1; transform: scaleY(1); }
+    }
+
+    .rotate {
+      transform: rotate(90deg);
       transition: transform 0.2s ease;
     }
 
-    .expanded .toggle-arrow {
-      transform: rotate(90deg);
-    }
-
-    h2 {
-      padding: 1rem;
-      margin: 0;
-      background: #eee;
-      text-align: center;
-    }
-
-    .search-box {
-      padding: 0.75rem 1rem;
-    }
-
-    .search-box input {
-      width: 100%;
-      padding: 0.6rem;
-      border: 1px solid #ccc;
-      border-radius: 5px;
+    .chevron {
+      transition: transform 0.2s ease;
     }
   </style>
 </head>
 <body>
-
   <div class="container">
-    <h2>Useful Links</h2>
+    <header>Useful Links</header>
 
     <!-- Procedure Reference Cards -->
-    <div class="main-link orange" onclick="toggleMenu(this)">
-      Procedure Reference Cards
-      <i class="fas fa-chevron-right toggle-arrow"></i>
-      <span class="icon"></span>
-    </div>
-    <div class="submenu">
-      <a href="#">Closed Reduction & Casting</a>
-      <a href="#">External Fixation</a>
-      <a href="#">IM Nailing - Tibia</a>
-      <a href="#">IM Nailing - Femur</a>
-      <a href="#">ORIF - Wrist</a>
-      <a href="#">ORIF - Ankle</a>
-      <a href="#">Pelvic Fixation</a>
+    <div class="section">
+      <div class="section-header" onclick="toggleSection(this)">
+        <div>Procedure Reference Cards</div>
+        <div class="circle-icon orange">
+          <i class="fas fa-chevron-right chevron"></i>
+        </div>
+      </div>
+      <div class="section-content">
+        <a href="#">Closed Reduction & Casting</a>
+        <a href="#">External Fixation</a>
+        <a href="#">IM Nailing - Tibia</a>
+        <a href="#">IM Nailing - Femur</a>
+        <a href="#">ORIF - Wrist</a>
+        <a href="#">ORIF - Ankle</a>
+        <a href="#">Pelvic Fixation</a>
+      </div>
     </div>
 
     <!-- Surgical Operative Techniques -->
-    <div class="main-link blue" onclick="toggleMenu(this)">
-      Surgical Operative Techniques
-      <i class="fas fa-chevron-right toggle-arrow"></i>
-      <span class="icon"></span>
-    </div>
-    <div class="submenu">
-      <div class="search-box">
-        <input type="text" placeholder="Search by company or product...">
+    <div class="section">
+      <div class="section-header" onclick="toggleSection(this)">
+        <div>Surgical Operative Techniques</div>
+        <div class="circle-icon blue">
+          <i class="fas fa-chevron-right chevron"></i>
+        </div>
       </div>
-      <a href="#">DePuy Synthes</a>
-      <a href="#">Stryker</a>
-      <a href="#">Zimmer Biomet</a>
-      <a href="#">Smith & Nephew</a>
-      <a href="#">Medartis</a>
+      <div class="section-content">
+        <a href="#">DePuy Synthes</a>
+        <a href="#">Stryker</a>
+        <a href="#">Zimmer Biomet</a>
+        <a href="#">Smith & Nephew</a>
+        <a href="#">Medartis</a>
+      </div>
     </div>
 
     <!-- Inventory Control -->
-    <div class="main-link green" onclick="toggleMenu(this)">
-      Inventory Control for Implants
-      <i class="fas fa-chevron-right toggle-arrow"></i>
-      <span class="icon"></span>
-    </div>
-    <div class="submenu">
-      <p style="padding: 0.75rem;">Under construction</p>
+    <div class="section">
+      <div class="section-header" onclick="toggleSection(this)">
+        <div>Inventory Control for Implants</div>
+        <div class="circle-icon green">
+          <i class="fas fa-chevron-right chevron"></i>
+        </div>
+      </div>
+      <div class="section-content">
+        <span class="chip">Under construction</span>
+      </div>
     </div>
 
-    <!-- Table Tutorial -->
-    <div class="main-link red" onclick="toggleMenu(this)">
-      Orthopaedic Operating Table Tutorial
-      <i class="fas fa-chevron-right toggle-arrow"></i>
-      <span class="icon"></span>
-    </div>
-    <div class="submenu">
-      <a href="#">Maquet Yuno II</a>
-      <a href="#">Allen Advance Table</a>
-      <a href="#">Skytron 6702</a>
-      <a href="#">Trumpf TruSystem</a>
+    <!-- Operating Table -->
+    <div class="section">
+      <div class="section-header" onclick="toggleSection(this)">
+        <div>Orthopaedic Operating Table Tutorial</div>
+        <div class="circle-icon red">
+          <i class="fas fa-chevron-right chevron"></i>
+        </div>
+      </div>
+      <div class="section-content">
+        <a href="#">Maquet Yuno II</a>
+        <a href="#">Allen Advance Table</a>
+        <a href="#">Skytron 6702</a>
+        <a href="#">Trumpf TruSystem</a>
+      </div>
     </div>
 
     <!-- Contact Directory -->
-    <div class="main-link teal" onclick="toggleMenu(this)">
-      Contact Directory
-      <i class="fas fa-chevron-right toggle-arrow"></i>
-      <span class="icon"></span>
-    </div>
-    <div class="submenu">
-      <strong>Clinical Support Reps:</strong>
-      <a href="#">DePuy - depuy@example.com | 123-456-7890</a>
-      <a href="#">Stryker - stryker@example.com | 123-456-7890</a>
-      <strong>Hospital Extension:</strong>
-      <p style="padding-left: 0.5rem;">Ext. 2345</p>
+    <div class="section">
+      <div class="section-header" onclick="toggleSection(this)">
+        <div>Contact Directory</div>
+        <div class="circle-icon teal">
+          <i class="fas fa-chevron-right chevron"></i>
+        </div>
+      </div>
+      <div class="section-content">
+        <a href="#">DePuy - depuy@example.com | 123-456-7890</a>
+        <a href="#">Stryker - stryker@example.com | 123-456-7890</a>
+        <a href="#">Zimmer - zimmer@example.com | 123-456-7890</a>
+        <p>Hospital Extension: 2345</p>
+      </div>
     </div>
 
     <!-- Training & Events -->
-    <div class="main-link green" onclick="toggleMenu(this)">
-      Training and Events
-      <i class="fas fa-chevron-right toggle-arrow"></i>
-      <span class="icon"></span>
-    </div>
-    <div class="submenu">
-      <p style="padding: 0.75rem;">Events will be listed here soon.</p>
+    <div class="section">
+      <div class="section-header" onclick="toggleSection(this)">
+        <div>Training and Events</div>
+        <div class="circle-icon green">
+          <i class="fas fa-chevron-right chevron"></i>
+        </div>
+      </div>
+      <div class="section-content">
+        <p>Events will be listed here soon.</p>
+      </div>
     </div>
   </div>
 
   <script>
-    function toggleMenu(el) {
-      el.classList.toggle("expanded");
-      const next = el.nextElementSibling;
-      if (next.style.display === "block") {
-        next.style.display = "none";
+    function toggleSection(header) {
+      const content = header.nextElementSibling;
+      const icon = header.querySelector('.chevron');
+
+      if (content.style.display === "block") {
+        content.style.display = "none";
+        icon.classList.remove('rotate');
       } else {
-        next.style.display = "block";
+        content.style.display = "block";
+        icon.classList.add('rotate');
       }
     }
   </script>
-
 </body>
 </html>
