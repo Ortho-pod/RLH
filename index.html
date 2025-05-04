@@ -191,7 +191,7 @@
       resultsDiv.innerHTML = '';
       if (query === '') return;
 
-      const keywords = query.split(/\s+/);
+      const keywords = query.split(/\s+/); // break into words
 
       const filtered = inventory.filter(item => {
         const fieldsToSearch = activeField
@@ -222,16 +222,16 @@
         div.className = 'result';
         let html = '';
 
-        html += `<strong>Item:</strong> ${item.Item} <br />
+        html += <strong>Item:</strong> ${item.Item} <br />
                  <strong>Item ID:</strong> ${item.ItemID} <br />
                  <strong>Tray Inclusion/Product Category:</strong> ${item.TrayInclusionProductCategory} <br />
                  <strong>Tray ID:</strong> ${item.TrayID} <br />
                  <strong>Stock Level:</strong> ${item.StockLevel} <br />
                  <strong>Total Count:</strong> ${item.TotalCount} <br />
-                 <strong>Storage Location:</strong> ${item.StorageLocation} <br />`;
+                 <strong>Storage Location:</strong> ${item.StorageLocation} <br />;
 
         if (item.TrayInclusionProductCategory) {
-          html += `<a href="instrument-checklist.html?category=${encodeURIComponent(item.TrayInclusionProductCategory)}" class="instrument-link">Instrument Checklist</a>`;
+          html += <a href="instrument-checklist.html?category=${encodeURIComponent(item.TrayInclusionProductCategory)}" class="instrument-link">Instrument Checklist</a>;
         }
 
         div.innerHTML = html;
@@ -243,7 +243,7 @@
       fetch(firebaseUrl)
         .then(response => response.json())
         .then(data => {
-          inventory = data || [];
+          inventory = Object.values(data || {});
           resultsDiv.innerHTML = '';
         })
         .catch(error => {
