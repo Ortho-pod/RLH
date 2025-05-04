@@ -5,164 +5,190 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Useful Links - OrthoPod</title>
 
+  <!-- Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
   <style>
     body {
       font-family: 'Arial', sans-serif;
       background: #f2f2f2;
       margin: 0;
-      padding: 1rem;
     }
 
-    h2 {
-      text-align: center;
-      font-size: 2rem;
-      margin-bottom: 1rem;
-    }
-
-    .accordion {
-      background-color: #fff;
-      border-radius: 10px;
-      margin: 1rem 0;
+    .container {
+      max-width: 400px;
+      margin: auto;
+      background: white;
+      min-height: 100vh;
       box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+      padding-bottom: 3rem;
     }
 
-    .accordion-item {
-      border-bottom: 1px solid #ccc;
-    }
-
-    .accordion-header {
-      background: #e8e8e8;
+    .main-link {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
       padding: 1rem;
       font-weight: bold;
+      border-bottom: 1px solid #ddd;
       cursor: pointer;
     }
 
-    .accordion-body {
+    .main-link .icon {
+      width: 18px;
+      height: 18px;
+      border-radius: 50%;
+      margin-left: 10px;
+    }
+
+    .main-link.red .icon { background: #e63946; }
+    .main-link.blue .icon { background: #1d3557; }
+    .main-link.green .icon { background: #2a9d8f; }
+    .main-link.orange .icon { background: #f4a261; }
+    .main-link.teal .icon { background: #00b4d8; }
+
+    .submenu {
       display: none;
-      padding: 1rem;
+      padding-left: 1.5rem;
+      background: #fafafa;
+      border-left: 3px solid #ccc;
     }
 
-    .accordion-body a {
+    .submenu a {
       display: block;
-      color: #4285F4;
+      padding: 0.75rem 0;
       text-decoration: none;
-      margin: 0.5rem 0;
+      color: #333;
+      font-size: 0.95rem;
     }
 
-    .accordion-body input {
+    .submenu a:hover {
+      text-decoration: underline;
+    }
+
+    .toggle-arrow {
+      transition: transform 0.2s ease;
+    }
+
+    .expanded .toggle-arrow {
+      transform: rotate(90deg);
+    }
+
+    h2 {
+      padding: 1rem;
+      margin: 0;
+      background: #eee;
+      text-align: center;
+    }
+
+    .search-box {
+      padding: 0.75rem 1rem;
+    }
+
+    .search-box input {
       width: 100%;
-      padding: 0.5rem;
-      margin-bottom: 1rem;
+      padding: 0.6rem;
       border: 1px solid #ccc;
       border-radius: 5px;
-    }
-
-    .top-links a {
-      background-color: #e8e8e8;
-      padding: 0.5rem 1rem;
-      border-radius: 20px;
-      text-decoration: none;
-      color: #4285F4;
-      font-weight: bold;
-    }
-
-    .top-links {
-      margin-bottom: 1rem;
     }
   </style>
 </head>
 <body>
 
-  <div class="top-links">
-    <a href="index.html">Back to Home</a>
-  </div>
-
-  <h2>Useful Links</h2>
-
-  <div class="accordion">
+  <div class="container">
+    <h2>Useful Links</h2>
 
     <!-- Procedure Reference Cards -->
-    <div class="accordion-item">
-      <div class="accordion-header">Procedure Reference Cards</div>
-      <div class="accordion-body">
-        <a href="#">Closed Reduction & Casting</a>
-        <a href="#">External Fixation</a>
-        <a href="#">IM Nailing - Tibia</a>
-        <a href="#">IM Nailing - Femur</a>
-        <a href="#">Open Reduction Internal Fixation (ORIF) - Wrist</a>
-        <a href="#">ORIF - Ankle</a>
-        <a href="#">ORIF - Hip</a>
-        <a href="#">Pelvic Fracture Fixation</a>
-        <a href="#">Complex Revision Fixation</a>
-      </div>
+    <div class="main-link orange" onclick="toggleMenu(this)">
+      Procedure Reference Cards
+      <i class="fas fa-chevron-right toggle-arrow"></i>
+      <span class="icon"></span>
+    </div>
+    <div class="submenu">
+      <a href="#">Closed Reduction & Casting</a>
+      <a href="#">External Fixation</a>
+      <a href="#">IM Nailing - Tibia</a>
+      <a href="#">IM Nailing - Femur</a>
+      <a href="#">ORIF - Wrist</a>
+      <a href="#">ORIF - Ankle</a>
+      <a href="#">Pelvic Fixation</a>
     </div>
 
     <!-- Surgical Operative Techniques -->
-    <div class="accordion-item">
-      <div class="accordion-header">Surgical Operative Techniques</div>
-      <div class="accordion-body">
+    <div class="main-link blue" onclick="toggleMenu(this)">
+      Surgical Operative Techniques
+      <i class="fas fa-chevron-right toggle-arrow"></i>
+      <span class="icon"></span>
+    </div>
+    <div class="submenu">
+      <div class="search-box">
         <input type="text" placeholder="Search by company or product...">
-        <a href="#">DePuy Synthes</a>
-        <a href="#">Stryker</a>
-        <a href="#">Zimmer Biomet</a>
-        <a href="#">Smith & Nephew</a>
-        <a href="#">Medartis</a>
-        <a href="#">Arthrex</a>
-        <a href="#">Orthofix</a>
-        <a href="#">Wright Medical</a>
       </div>
+      <a href="#">DePuy Synthes</a>
+      <a href="#">Stryker</a>
+      <a href="#">Zimmer Biomet</a>
+      <a href="#">Smith & Nephew</a>
+      <a href="#">Medartis</a>
     </div>
 
     <!-- Inventory Control -->
-    <div class="accordion-item">
-      <div class="accordion-header">Inventory Control for Implants</div>
-      <div class="accordion-body">
-        <p>Under construction</p>
-      </div>
+    <div class="main-link green" onclick="toggleMenu(this)">
+      Inventory Control for Implants
+      <i class="fas fa-chevron-right toggle-arrow"></i>
+      <span class="icon"></span>
+    </div>
+    <div class="submenu">
+      <p style="padding: 0.75rem;">Under construction</p>
     </div>
 
     <!-- Table Tutorial -->
-    <div class="accordion-item">
-      <div class="accordion-header">Orthopaedic Operating Table Tutorial</div>
-      <div class="accordion-body">
-        <a href="#">Maquet Yuno II</a>
-        <a href="#">Allen Advance Table</a>
-        <a href="#">Skytron 6702 Hercules</a>
-        <a href="#">Trumpf Medical TruSystem</a>
-      </div>
+    <div class="main-link red" onclick="toggleMenu(this)">
+      Orthopaedic Operating Table Tutorial
+      <i class="fas fa-chevron-right toggle-arrow"></i>
+      <span class="icon"></span>
+    </div>
+    <div class="submenu">
+      <a href="#">Maquet Yuno II</a>
+      <a href="#">Allen Advance Table</a>
+      <a href="#">Skytron 6702</a>
+      <a href="#">Trumpf TruSystem</a>
     </div>
 
     <!-- Contact Directory -->
-    <div class="accordion-item">
-      <div class="accordion-header">Contact Directory</div>
-      <div class="accordion-body">
-        <strong>Clinical Support Reps</strong>
-        <a href="#">DePuy Synthes - depuy@example.com | 123-456-7890</a>
-        <a href="#">Stryker - stryker@example.com | 123-456-7890</a>
-        <a href="#">Zimmer Biomet - zimmer@example.com | 123-456-7890</a>
-        <strong>Hospital Extension</strong>
-        <p>Ext: 2345</p>
-      </div>
+    <div class="main-link teal" onclick="toggleMenu(this)">
+      Contact Directory
+      <i class="fas fa-chevron-right toggle-arrow"></i>
+      <span class="icon"></span>
+    </div>
+    <div class="submenu">
+      <strong>Clinical Support Reps:</strong>
+      <a href="#">DePuy - depuy@example.com | 123-456-7890</a>
+      <a href="#">Stryker - stryker@example.com | 123-456-7890</a>
+      <strong>Hospital Extension:</strong>
+      <p style="padding-left: 0.5rem;">Ext. 2345</p>
     </div>
 
     <!-- Training & Events -->
-    <div class="accordion-item">
-      <div class="accordion-header">Training and Events</div>
-      <div class="accordion-body">
-        <p>Upcoming events will be listed here.</p>
-      </div>
+    <div class="main-link green" onclick="toggleMenu(this)">
+      Training and Events
+      <i class="fas fa-chevron-right toggle-arrow"></i>
+      <span class="icon"></span>
     </div>
-
+    <div class="submenu">
+      <p style="padding: 0.75rem;">Events will be listed here soon.</p>
+    </div>
   </div>
 
   <script>
-    const headers = document.querySelectorAll('.accordion-header');
-    headers.forEach(header => {
-      header.addEventListener('click', () => {
-        const body = header.nextElementSibling;
-        body.style.display = body.style.display === 'block' ? 'none' : 'block';
-      });
-    });
+    function toggleMenu(el) {
+      el.classList.toggle("expanded");
+      const next = el.nextElementSibling;
+      if (next.style.display === "block") {
+        next.style.display = "none";
+      } else {
+        next.style.display = "block";
+      }
+    }
   </script>
 
 </body>
