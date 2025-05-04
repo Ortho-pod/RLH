@@ -5,78 +5,69 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Useful Links - OrthoPod</title>
 
-  <!-- Fonts -->
-  <link href="https://fonts.googleapis.com/css2?family=Roboto+Condensed:wght@400;600&display=swap" rel="stylesheet">
-  <link href="https://fonts.cdnfonts.com/s/106113/Aptos.woff" rel="stylesheet">
-  <link href="https://fonts.googleapis.com/css2?family=Product+Sans&display=swap" rel="stylesheet">
-
   <style>
-    @font-face {
-      font-family: 'Aptos';
-      src: url('https://fonts.cdnfonts.com/s/106113/Aptos.woff') format('woff');
-      font-weight: 400;
-      font-style: normal;
-    }
-
     body {
-      font-family: 'Aptos', sans-serif;
-      padding: 2rem;
+      font-family: 'Arial', sans-serif;
       background: #f2f2f2;
-      text-align: center;
-    }
-
-    .top-links {
-      position: absolute;
-      top: 1rem;
-      left: 1rem;
-      z-index: 1000;
-    }
-
-    .top-links a {
-      color: #4285F4;
-      font-family: 'Aptos', sans-serif;
-      font-weight: 400;
-      text-decoration: none;
-      font-size: 0.95rem;
-      padding: 0.7rem 1.2rem;
-      border-radius: 20px;
-      transition: background-color 0.3s, color 0.3s;
-      background-color: #e8e8e8;
-    }
-
-    .top-links a:hover {
-      background-color: #dcdcdc;
+      margin: 0;
+      padding: 1rem;
     }
 
     h2 {
-      font-family: 'Product Sans', sans-serif;
-      font-size: 2.8rem;
-      font-weight: 700;
-      margin-bottom: 2rem;
-      letter-spacing: -1px;
-      line-height: 1.1;
+      text-align: center;
+      font-size: 2rem;
+      margin-bottom: 1rem;
     }
 
-    .link-card {
-      background: white;
-      padding: 1rem 1.5rem;
-      margin: 1rem auto;
-      width: 80%;
-      max-width: 500px;
+    .accordion {
+      background-color: #fff;
       border-radius: 10px;
+      margin: 1rem 0;
       box-shadow: 0 2px 6px rgba(0,0,0,0.1);
-      text-align: left;
     }
 
-    .link-card a {
+    .accordion-item {
+      border-bottom: 1px solid #ccc;
+    }
+
+    .accordion-header {
+      background: #e8e8e8;
+      padding: 1rem;
+      font-weight: bold;
+      cursor: pointer;
+    }
+
+    .accordion-body {
+      display: none;
+      padding: 1rem;
+    }
+
+    .accordion-body a {
+      display: block;
       color: #4285F4;
       text-decoration: none;
-      font-size: 1.1rem;
+      margin: 0.5rem 0;
+    }
+
+    .accordion-body input {
+      width: 100%;
+      padding: 0.5rem;
+      margin-bottom: 1rem;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+    }
+
+    .top-links a {
+      background-color: #e8e8e8;
+      padding: 0.5rem 1rem;
+      border-radius: 20px;
+      text-decoration: none;
+      color: #4285F4;
       font-weight: bold;
     }
 
-    .link-card a:hover {
-      text-decoration: underline;
+    .top-links {
+      margin-bottom: 1rem;
     }
   </style>
 </head>
@@ -87,38 +78,91 @@
   </div>
 
   <h2>Useful Links</h2>
-  <div id="links-container">Loading links...</div>
+
+  <div class="accordion">
+
+    <!-- Procedure Reference Cards -->
+    <div class="accordion-item">
+      <div class="accordion-header">Procedure Reference Cards</div>
+      <div class="accordion-body">
+        <a href="#">Closed Reduction & Casting</a>
+        <a href="#">External Fixation</a>
+        <a href="#">IM Nailing - Tibia</a>
+        <a href="#">IM Nailing - Femur</a>
+        <a href="#">Open Reduction Internal Fixation (ORIF) - Wrist</a>
+        <a href="#">ORIF - Ankle</a>
+        <a href="#">ORIF - Hip</a>
+        <a href="#">Pelvic Fracture Fixation</a>
+        <a href="#">Complex Revision Fixation</a>
+      </div>
+    </div>
+
+    <!-- Surgical Operative Techniques -->
+    <div class="accordion-item">
+      <div class="accordion-header">Surgical Operative Techniques</div>
+      <div class="accordion-body">
+        <input type="text" placeholder="Search by company or product...">
+        <a href="#">DePuy Synthes</a>
+        <a href="#">Stryker</a>
+        <a href="#">Zimmer Biomet</a>
+        <a href="#">Smith & Nephew</a>
+        <a href="#">Medartis</a>
+        <a href="#">Arthrex</a>
+        <a href="#">Orthofix</a>
+        <a href="#">Wright Medical</a>
+      </div>
+    </div>
+
+    <!-- Inventory Control -->
+    <div class="accordion-item">
+      <div class="accordion-header">Inventory Control for Implants</div>
+      <div class="accordion-body">
+        <p>Under construction</p>
+      </div>
+    </div>
+
+    <!-- Table Tutorial -->
+    <div class="accordion-item">
+      <div class="accordion-header">Orthopaedic Operating Table Tutorial</div>
+      <div class="accordion-body">
+        <a href="#">Maquet Yuno II</a>
+        <a href="#">Allen Advance Table</a>
+        <a href="#">Skytron 6702 Hercules</a>
+        <a href="#">Trumpf Medical TruSystem</a>
+      </div>
+    </div>
+
+    <!-- Contact Directory -->
+    <div class="accordion-item">
+      <div class="accordion-header">Contact Directory</div>
+      <div class="accordion-body">
+        <strong>Clinical Support Reps</strong>
+        <a href="#">DePuy Synthes - depuy@example.com | 123-456-7890</a>
+        <a href="#">Stryker - stryker@example.com | 123-456-7890</a>
+        <a href="#">Zimmer Biomet - zimmer@example.com | 123-456-7890</a>
+        <strong>Hospital Extension</strong>
+        <p>Ext: 2345</p>
+      </div>
+    </div>
+
+    <!-- Training & Events -->
+    <div class="accordion-item">
+      <div class="accordion-header">Training and Events</div>
+      <div class="accordion-body">
+        <p>Upcoming events will be listed here.</p>
+      </div>
+    </div>
+
+  </div>
 
   <script>
-    fetch('https://ortho-61f64-default-rtdb.firebaseio.com/links.json')
-      .then(response => response.json())
-      .then(data => {
-        const container = document.getElementById('links-container');
-        container.innerHTML = '';
-
-        if (Array.isArray(data)) {
-          data.forEach(link => {
-            if (link && link.name && link.url) {
-              const div = document.createElement('div');
-              div.className = 'link-card';
-
-              const a = document.createElement('a');
-              a.href = link.url;
-              a.textContent = link.name;
-              a.target = '_blank';
-              
-              div.appendChild(a);
-              container.appendChild(div);
-            }
-          });
-        } else {
-          container.textContent = 'No links found.';
-        }
-      })
-      .catch(err => {
-        document.getElementById('links-container').textContent = 'Failed to load links.';
-        console.error(err);
+    const headers = document.querySelectorAll('.accordion-header');
+    headers.forEach(header => {
+      header.addEventListener('click', () => {
+        const body = header.nextElementSibling;
+        body.style.display = body.style.display === 'block' ? 'none' : 'block';
       });
+    });
   </script>
 
 </body>
