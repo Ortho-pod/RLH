@@ -2,266 +2,1970 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>OrthoPod</title>
-
-  <!-- Fonts -->
-  <link href="https://fonts.googleapis.com/css2?family=Roboto+Condensed:wght@400;600&display=swap" rel="stylesheet">
-  <link href="https://fonts.cdnfonts.com/s/106113/Aptos.woff" rel="stylesheet">
-  <link href="https://fonts.googleapis.com/css2?family=Product+Sans&display=swap" rel="stylesheet">
-
+  <title>RLH Theatre Allocation</title>
   <style>
-    @font-face {
-      font-family: 'Aptos';
-      src: url('https://fonts.cdnfonts.com/s/106113/Aptos.woff') format('woff');
-      font-weight: 400;
-      font-style: normal;
+    @media print {
+      @page {
+        size: A3 portrait;
+        margin: 1cm;
+      }
+      body {
+        width: 29.7cm;
+        height: 42cm;
+        margin: 1cm;
+      }
+      .no-print {
+        display: none;
+      }
     }
-
     body {
-      font-family: 'Aptos', sans-serif;
-      padding: 1.8rem;
-      background: #f2f2f2;
-      text-align: center;
+      font-family: Arial, sans-serif;
+      margin: 5px;
+      font-size:20x;
     }
-
-    .top-links {
-      position: absolute;
-      top: 1rem;
-      left: 1rem;
-      z-index: 1000;
+    .header-line {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 10px;
     }
-
-    .top-links a {
-      color: #4285F4;
-      font-family: 'Aptos', sans-serif;
-      font-weight: 400;
-      text-decoration: none;
-      font-size: 0.95rem;
-      padding: 0.7rem 1.2rem;
-      border-radius: 20px;
-      transition: background-color 0.3s, color 0.3s;
-      background-color: #e8e8e8;
+    .header-title {
+      display: flex;
+      align-items: center;
+      font-size: 20px;
     }
-
-    .top-links a:hover {
-      background-color: #dcdcdc;
+    .header-title span {
+      margin-left: 8px;
+      font-weight: bold;
     }
-
-    h2 {
-      font-family: 'Product Sans', sans-serif;
-      font-size: 3rem;
-      font-weight: 700;
-      margin-top: 4rem;
-      margin-bottom: 20px;
-      letter-spacing: -1px;
-      line-height: 1.1;
+    .header-title input[type="date"] {
+      margin-left: 8px;
+      font-size: 20px;
+      padding: 4px 6px;
     }
-
-    .search-container {
-      position: relative;
-      display: inline-block;
-      width: 50%;
-      max-width: 500px;
+    .button-group button {
+      margin-left: 5px;
+      font-size: 20px;
+      padding: 6px 10px;
     }
-
-    input[type="text"] {
-      padding: 1.2rem 2.8rem 1.2rem 1.2rem;
-      font-size: 1.3rem;
-      border-radius: 24px;
-      border: 1px solid #dcdcdc;
+    .grid-container {
+  display: grid;
+  grid-template-columns: 32% 36% 32%;
+  gap: 4px;
+}
+    .column {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+    }
+    .stacked-label {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      margin-bottom: 4px;
+    }
+    .stacked-row {
+      display: flex;
+      align-items: center;
       width: 100%;
+      margin-bottom: 4px;
+    }
+    .stacked-item-h1 {
+      font-size: 20px;
+      font-weight: bold;
+      color: #0074cc;
+      margin-right: 8px;
+    }
+    .stacked-item-h3 {
+      font-size: 20px;
+      font-weight: bold;
+      color: #0074cc;
+      margin-right: 8px;
+    }
+    .stacked-input {
+      width: 100%;
+      padding: 4px;
+      font-size: 20px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
       box-sizing: border-box;
     }
-
-    #searchBtn {
-      position: absolute;
-      right: 10px;
-      top: 50%;
-      transform: translateY(-50%);
-      border: none;
-      background: none;
-      cursor: pointer;
-      padding: 0;
+    .stacked-input.indented {
+      margin-left: calc(18px + 8px + 33px);
     }
-
-    #searchBtn svg {
-      fill: #777;
+    .theatre-block {
+      border: 1px solid #333;
+      background-color: #ffffff;
+      display: grid;
+      grid-template-columns: 1fr 2fr;
     }
-
-    .filter-btn {
-      background-color: #e8e8e8;
-      border: none;
-      padding: 0.7rem 1.2rem;
-      margin: 0.3rem;
-      border-radius: 20px;
-      font-size: 0.95rem;
-      cursor: pointer;
-      transition: background-color 0.3s, color 0.3s;
-      color: #333;
-      font-family: 'Aptos', sans-serif;
-    }
-
-    .filter-btn:hover {
-      background-color: #d2d2d2;
-    }
-
-    .filter-btn.active {
-      background-color: #4285f4;
-      color: white;
-    }
-
-    .result {
-      background: white;
-      padding: 1.2rem;
-      border-radius: 10px;
-      margin: 1rem auto;
-      width: 80%;
-      max-width: 500px;
-      box-shadow: 0 2px 6px rgba(0,0,0,0.1);
-      text-align: left;
-    }
-
-    .instrument-link {
+    .left-cell {
+      background-color: #d1e7f5;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
       font-weight: bold;
-      text-decoration: none;
-      color: #4285f4;
+      font-size: 25px;
+      padding: 4px;
+      border-right: 1px solid #333;
+      text-align: center;
+      cursor: pointer;
     }
+    .speciality-row {
+      margin-top: 2px;
+      text-align: center;
+      font-size: 20px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+    .speciality-row select.speciality-select,
+    .speciality-row select.session-select {
+      width: 100%;
+      font-size: 20px;
+      background: transparent;
+      border: none;
+      appearance: none;
+      font-weight: bold;
+      text-align: center;
+    }
+    .right-cell {
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-start;
+      padding: 2px;
+      font-size: 20px;
+    }
+    .staff-entry {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin: 1px 0;
+    }
+    .staff-entry span.name {
+      font-size: 20px;
+      flex: 1;
+      margin-left: 2px;
+    }
+    .closed {
+      background-color: red;
+      color: white;
+      font-weight: bold;
+      text-align: center;
+      width: 100%;
+      height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 50px;
+      padding: 10px;
+    }
+    .control-buttons {
+      font-size: 20px;
+      margin-left: 2px;
+    }
+    button {
+      margin: 5px 2px;
+    }
+    .simple-block {
+      border: 1px solid #333;
+      background-color: #ffffff;
+      padding: 10px;
+      font-size: 20px;
+      font-weight: bold;
+      text-align: center;
+      margin-bottom: 12px;
+      min-height: 40px;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 10px;
+    }
+    th,
+    td {
+      text-align: left;
+      padding: 8px;
+      border-bottom: 1px solid #ccc;
+    }
+    th {
+      background-color: #f0f0f0;
+    }
+  
+  .role-selector {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  padding: 4px;
+  margin-bottom: 8px;
+}
+.theatre-block.selected {
+  outline: 3px solid #0074cc;
+  box-shadow: 0 0 8px #0074cc;
+}
+.round-icon-button {
+  width: 40px;
+  height: 40px;
+  font-size: 20px;
+  border: none;
+  border-radius: 6px;
+  padding: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  font-weight: bold;
+  line-height: 1;
+}
+.purple-button {
+  background-color: #6a0dad; /* purple */
+  color: white;
+}
 
-    .instrument-link:hover {
-      text-decoration: underline;
-    }
-  </style>
+.purple-button:hover {
+  background-color: #5a0099;
+}
+.parsed-roster-header,
+.parsed-roster-row {
+  display: flex;
+  font-size: 18px;
+  padding: 8px 0;
+}
+
+.parsed-roster-cell {
+  flex: 1;
+  padding: 6px 10px;
+}
+
+.parsed-roster-header {
+  font-weight: bold;
+  background-color: #005EB8; /* NHS Blue */
+  color: white;
+  border-bottom: 2px solid #003C71; /* darker NHS blue */
+}
+
+.parsed-roster-row {
+  border-bottom: 1px solid #ccc;
+  align-items: center;
+}
+
+.parsed-roster-actions {
+  display: flex;
+  gap: 6px;
+}
+</style>
 </head>
 <body>
-
-  <div class="top-links">
-    <a href="links.html">Useful Links</a>
+ <div class="header-line" style="display: flex; align-items: center; justify-content: space-between; padding: 10px; background-color: #f0f0f0; border-radius: 6px; margin-bottom: 10px;">
+  <!-- Left: Title -->
+  <div style="font-size: 30px; font-weight: bold;">
+    RLH Theatre Allocation
   </div>
 
-  <h2>
-    <span style="color:#DB4437;">O</span>
-    <span style="color:#0F9D58;">r</span>
-    <span style="color:#4285F4;">t</span>
-    <span style="color:#F4B400;">h</span>
-    <span style="color:#DB4437;">o</span>
-    <span style="color:#0F9D58;">P</span>
-    <span style="color:#4285F4;">o</span>
-    <span style="color:#F4B400;">d</span>
-  </h2>
+  <!-- Right: Date + Buttons -->
+  <div style="display: flex; align-items: center; gap: 15px;">
+    <span id="dayLabel" style="font-size: 20px;">Monday</span>
+    <input type="date" id="customDate" style="font-size: 20px; padding: 6px;" />
 
-  <div class="search-container">
-    <input type="text" id="searchBar" placeholder="Search Instrument..." />
-    <button id="searchBtn">
-      <svg xmlns="http://www.w3.org/2000/svg" height="20" width="20" viewBox="0 0 24 24">
-        <path d="M15.5 14h-.79l-.28-.27A6.471 6.471 0 0016 9.5 6.5 6.5 0 109.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l4.25 4.25 1.5-1.5L15.5 14zm-6 0C8.01 14 6 11.99 6 9.5S8.01 5 10.5 5 15 7.01 15 9.5 12.99 14 10.5 14z"/>
-      </svg>
+    <!-- Print Button -->
+    <button onclick="window.print()" class="no-print"
+      style="
+        font-size: 18px;
+        background-color: #005EB8;
+        color: white;
+        border: none;
+        padding: 10px 18px;
+        border-radius: 6px;
+        cursor: pointer;
+        box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        transition: background-color 0.3s ease;
+      "
+      onmouseover="this.style.backgroundColor='#003f7f'"
+      onmouseout="this.style.backgroundColor='#005EB8'"
+    >
+      🖨️ Print
+    </button>
+
+    <!-- Save as PDF Button -->
+    <button onclick="saveAsPDF()" class="no-print"
+      style="
+        font-size: 18px;
+        background-color: #28a745;
+        color: white;
+        border: none;
+        padding: 10px 18px;
+        border-radius: 6px;
+        cursor: pointer;
+        box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        transition: background-color 0.3s ease;
+      "
+      onmouseover="this.style.backgroundColor='#1e7e34'"
+      onmouseout="this.style.backgroundColor='#28a745'"
+    >
+      💾 Save as PDF
     </button>
   </div>
+</div>
 
-  <div id="filters" style="margin-top: 1rem; margin-bottom: 2rem;">
-    <button class="filter-btn" data-field="Item">Search by Item</button>
-    <button class="filter-btn" data-field="ItemID">Search by Item ID</button>
-    <button class="filter-btn" data-field="TrayInclusionProductCategory">Search by Tray Inclusion / Product Category</button>
-    <button class="filter-btn" data-field="TrayID">Search by Tray ID</button>
-  </div>
+<div class="grid-container" id="gridContainer"></div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.13.216/pdf.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+<script>
+function saveAsPDF() {
+  const element = document.body; // or a specific container div like document.getElementById("mainContent")
 
-  <div id="results">Loading inventory...</div>
+  const opt = {
+    margin:       0.5,
+    filename:     'RLH_Theatre_Allocation.pdf',
+    image:        { type: 'jpeg', quality: 0.98 },
+    html2canvas:  { scale: 2 },
+    jsPDF:        { unit: 'in', format: 'a3', orientation: 'portrait' }
+  };
 
-  <script>
-    const firebaseUrl = "https://ortho-61f64-default-rtdb.firebaseio.com/instruments.json";
-    let inventory = [];
+  html2pdf().set(opt).from(element).save();
+}
+function addStaffToTheatre() {
+  const theatreLabel = document.getElementById('theatre-select').value;
+  const role = document.getElementById('role-select').value;
+  if (!theatreLabel || !role) return alert("Please select both a theatre and a role.");
 
-    const searchBar = document.getElementById('searchBar');
-    const searchBtn = document.getElementById('searchBtn');
-    const resultsDiv = document.getElementById('results');
-    let activeField = null;
+  const blocks = document.querySelectorAll('.theatre-block');
+  for (const block of blocks) {
+    const label = block.querySelector('.left-cell div').textContent.trim();
+    if (label === theatreLabel) {
+      const staffList = block.querySelector('.staff-list');
+      const entry = document.createElement('div');
+      entry.className = 'staff-entry';
+      entry.innerHTML = `<span class='name'>${role}:</span>`;
 
-    document.querySelectorAll('.filter-btn').forEach(btn => {
-      btn.addEventListener('click', () => {
-        document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
-        btn.classList.add('active');
-        activeField = btn.dataset.field;
-        searchInventory();
-      });
-    });
+      // Determine insertion point
+      if (role === 'Scrub N/P' || role === 'HCA' || role === 'Anaes N/P') {
+        const existingEntries = Array.from(staffList.querySelectorAll('.staff-entry'));
+        let inserted = false;
 
-    function searchInventory() {
-      const query = searchBar.value.toLowerCase().trim();
-      resultsDiv.innerHTML = '';
-      if (query === '') return;
-
-      const keywords = query.split(/\s+/); // break into words
-
-      const filtered = inventory.filter(item => {
-        const fieldsToSearch = activeField
-          ? [(item[activeField] || '').toLowerCase()]
-          : [
-              (item.Item || '').toLowerCase(),
-              (item.ItemID || '').toLowerCase(),
-              (item.TrayInclusionProductCategory || '').toLowerCase(),
-              (item.TrayID || '').toLowerCase()
-            ];
-
-        return keywords.every(keyword =>
-          fieldsToSearch.some(field => field.includes(keyword))
-        );
-      });
-
-      renderResults(filtered, query);
-    }
-
-    function renderResults(items, query) {
-      if (items.length === 0) {
-        resultsDiv.innerHTML = 'No matching instruments found.';
-        return;
-      }
-
-      items.forEach(item => {
-        const div = document.createElement('div');
-        div.className = 'result';
-        let html = '';
-
-        html += <strong>Item:</strong> ${item.Item} <br />
-                 <strong>Item ID:</strong> ${item.ItemID} <br />
-                 <strong>Tray Inclusion/Product Category:</strong> ${item.TrayInclusionProductCategory} <br />
-                 <strong>Tray ID:</strong> ${item.TrayID} <br />
-                 <strong>Stock Level:</strong> ${item.StockLevel} <br />
-                 <strong>Total Count:</strong> ${item.TotalCount} <br />
-                 <strong>Storage Location:</strong> ${item.StorageLocation} <br />;
-
-        if (item.TrayInclusionProductCategory) {
-          html += <a href="instrument-checklist.html?category=${encodeURIComponent(item.TrayInclusionProductCategory)}" class="instrument-link">Instrument Checklist</a>;
+        for (let i = existingEntries.length - 1; i >= 0; i--) {
+          const span = existingEntries[i].querySelector('.name');
+          if (span && span.textContent.startsWith(role)) {
+            // Insert after this entry
+            if (existingEntries[i].nextSibling) {
+              staffList.insertBefore(entry, existingEntries[i].nextSibling);
+            } else {
+              staffList.appendChild(entry);
+            }
+            inserted = true;
+            break;
+          }
         }
 
-        div.innerHTML = html;
-        resultsDiv.appendChild(div);
+        if (!inserted) {
+          staffList.appendChild(entry);
+        }
+      } else {
+        // Cell Salvage or any new roles → just append
+        staffList.appendChild(entry);
+      }
+
+      break;
+    }
+  }
+}
+
+
+function removeStaffFromTheatre() {
+  const theatreLabel = document.getElementById('theatre-select').value;
+  const role = document.getElementById('role-select').value;
+  if (!theatreLabel || !role) return alert("Please select both a theatre and a role.");
+
+  const blocks = document.querySelectorAll('.theatre-block');
+  for (const block of blocks) {
+    const label = block.querySelector('.left-cell div').textContent.trim();
+    if (label === theatreLabel) {
+      const staffList = block.querySelector('.staff-list');
+      const entries = Array.from(staffList.querySelectorAll('.staff-entry'))
+        .filter(e => e.querySelector('.name').textContent.startsWith(role));
+      if (entries.length > 0) {
+        staffList.removeChild(entries[entries.length - 1]);
+      }
+      break;
+    }
+  }
+}
+</script>
+<script>
+function addTheatre() {
+  if (!selectedBlock) return alert("Click a theatre block to select it first.");
+  const role = prompt("Enter a role to add (e.g. Scrub N/P, HCA, Anaes N/P, Cell Salvage):");
+  if (role && role.trim()) {
+    const staffList = selectedBlock.querySelector('.staff-list');
+    addStaffEntry(staffList, role.trim());
+  }
+}
+
+function removeTheatre() {
+  if (!selectedBlock) return alert("Click a theatre block to select it first.");
+  const staffList = selectedBlock.querySelector('.staff-list');
+  if (staffList.lastChild) staffList.removeChild(staffList.lastChild);
+}
+</script>
+<script>
+
+// --- CSV Download Functionality ---
+function downloadCSV() {
+  let csvContent = "data:text/csv;charset=utf-8,Theatre,Speciality,Session Count,Staff
+";
+  const blocks = document.querySelectorAll('.theatre-block');
+
+  blocks.forEach(block => {
+    const theatre = block.querySelector('.left-cell div').textContent.trim();
+    const specialitySelect = block.querySelector('.speciality-select');
+    const sessionSelect = block.querySelector('.session-select');
+    let specialityWithSession = '';
+    if (specialitySelect && sessionSelect) {
+      const speciality = specialitySelect.value;
+      const sessionCount = sessionSelect.value;
+      specialityWithSession = `${speciality} ${sessionCount}`;
+    } else {
+      specialityWithSession = 'N/A';
+    }
+    const staffLines = Array.from(block.querySelectorAll('.staff-entry .name')).map(div => div.innerText).join(' | ');
+    csvContent += `${theatre},${specialityWithSession},,"${staffLines}"
+`;
+  });
+
+  const encodedUri = encodeURI(csvContent);
+  const link = document.createElement("a");
+  link.setAttribute("href", encodedUri);
+  link.setAttribute("download", "theatre_roster.csv");
+  document.body.appendChild(link);
+  link.click();
+  document.body.removeChild(link);
+}
+// --- Role Insertion Logic ---
+let selectedBlock = null;
+
+function highlightSelectedBlock(block) {
+  document.querySelectorAll('.theatre-block').forEach(b => b.classList.remove('selected'));
+  block.classList.add('selected');
+  selectedBlock = block;
+}
+
+document.addEventListener('click', function(e) {
+  const block = e.target.closest('.theatre-block');
+  if (block) {
+    highlightSelectedBlock(block);
+  }
+});
+
+document.getElementById('role-select').addEventListener('change', function() {
+  const role = this.value;
+  if (role && selectedBlock) {
+    const staffList = selectedBlock.querySelector('.staff-list');
+    addStaffEntry(staffList, role);
+    this.selectedIndex = 0; // Reset dropdown
+  }
+});
+
+</script>
+  <script>
+document.addEventListener("DOMContentLoaded", () => {
+  const dayLabel = document.getElementById("dayLabel");
+  const customDate = document.getElementById("customDate");
+
+  function updateDayLabel(dateValue) {
+    const date = dateValue ? new Date(dateValue) : new Date();
+    const days = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
+    if (!isNaN(date)) {
+      const weekday = days[date.getDay()];
+      dayLabel.textContent = weekday;
+    }
+  }
+
+  const today = new Date();
+  customDate.valueAsDate = today;
+  updateDayLabel(today);
+
+  customDate.addEventListener("change", function () {
+    updateDayLabel(this.value);
+  });
+
+  // --- Theatre Block Creation Logic ---
+
+function createTheatreBlock(label) {
+  const block = document.createElement("div");
+  block.className = "theatre-block";
+  block.setAttribute("data-theatre", label); // ✅ Add this line
+
+  const left = document.createElement("div");
+  left.className = "left-cell";
+
+  if (label === "MD" || label === "Night") {
+  left.innerHTML = `<div>${label}</div>`;
+} else if (label === "Theatre 7" || label === "Theatre 12") {
+  left.innerHTML = `
+    <div onclick="allocateStaffToTheatre('${label}', this)" style="width:100%;">${label}</div>
+    <div class='speciality-row'>
+      <select class='speciality-select' disabled>
+        <option value='EMERGENCY' selected>EMERGENCY</option>
+      </select>
+      <select class='session-select'>
+        <option value=''>  </option>
+        <option value='AM only'>AM only</option>
+  <option value='PM only'>PM only</option>
+  <option value='PM+Evening'>PM+Evening</option>
+  <option value='2 Sessions'>2 Sessions</option>
+  <option value='3 Sessions'>3 Sessions</option>
+      </select>
+    </div>
+  `;
+} else {
+  left.innerHTML = `
+    <div onclick="allocateStaffToTheatre('${label}', this)" style="width:100%;">${label}</div>
+    <div class='speciality-row'>
+      <select class='speciality-select'>
+        <option value=''>Speciality ▿</option>
+        <option value='TRAUMA'>TRAUMA</option>
+        <option value='NEURO'>NEURO</option>
+        <option value='HPB'>HPB</option>
+      </select>
+      <select class='session-select'>
+        <option value=''>Sessions ▿</option>
+        <option value=''>Theatre Closed</option>
+        <option value='AM only'>AM only</option>
+  <option value='PM only'>PM only</option>
+  <option value='PM+Evening'>PM+Evening</option>
+  <option value='2 Sessions'>2 Sessions</option>
+  <option value='3 Sessions'>3 Sessions</option>
+      </select>
+    </div>
+  `;
+}
+
+  const right = document.createElement("div");
+  right.className = "right-cell";
+  const staffList = document.createElement("div");
+  staffList.className = "staff-list";
+  ["Scrub N/P", "HCA", "Anaes N/P"].forEach((role) => addStaffEntry(staffList, role));
+  right.appendChild(staffList);
+
+  block.appendChild(left);
+  block.appendChild(right);
+  return block;
+}
+
+function addStaffEntry(container, role) {
+  const entry = document.createElement("div");
+  entry.className = "staff-entry";
+
+  // Count how many of this role already exist
+  const existing = Array.from(container.querySelectorAll('.staff-entry .name'));
+  const count = existing.filter(el =>
+    el.textContent.replace("⭐", "").trim().startsWith(role)
+  ).length + 1;
+
+  const numberedRole = `${role} ${count}`;
+
+  entry.innerHTML = `<span class='name'>${numberedRole}</span>`;
+  container.appendChild(entry);
+}
+
+// Insert 12 main theatres and ACAD theatres on load
+const gridContainer = document.getElementById("gridContainer");
+
+const column1 = document.createElement("div");
+column1.className = "column";
+//⬇️ Insert Header in Column 1
+const headerBlock = document.createElement("div");
+headerBlock.style.backgroundColor = "#f0f0f0";
+headerBlock.style.padding = "16px 12px";
+headerBlock.style.borderRadius = "6px";
+headerBlock.style.marginBottom = "10px";
+headerBlock.style.display = "flex";
+headerBlock.style.justifyContent = "center";
+headerBlock.style.alignItems = "center";
+
+// 🔹 Create 1490 block
+const block1490 = document.createElement("div");
+block1490.className = "theatre-block";
+
+const left1490 = document.createElement("div");
+left1490.className = "left-cell";
+left1490.innerHTML = `<div>1490</div>`;
+
+const right1490 = document.createElement("div");
+right1490.className = "right-cell";
+right1490.innerHTML = `
+  <div class="stacked-label">
+    <select id="dropdown-1490" class="stacked-input">
+      <option value="">-- Select Option --</option>
+      <option>Option A</option>
+      <option>Option B</option>
+    </select>
+  </div>
+`;
+
+block1490.appendChild(left1490);
+block1490.appendChild(right1490);
+column1.appendChild(block1490);
+
+// 🔹 Create 1494 block
+const block1494 = document.createElement("div");
+block1494.className = "theatre-block";
+
+const left1494 = document.createElement("div");
+left1494.className = "left-cell";
+left1494.innerHTML = `<div>1494</div>`;
+
+const right1494 = document.createElement("div");
+right1494.className = "right-cell";
+right1494.innerHTML = `
+  <div class="stacked-label">
+    <select id="dropdown-1494" class="stacked-input">
+      <option value="">-- Select Option --</option>
+      </select>
+  </div>
+`;
+
+block1494.appendChild(left1494);
+block1494.appendChild(right1494);
+column1.appendChild(block1494);
+
+[...Array(12).keys()].forEach((i) => {
+  const block = createTheatreBlock(`Theatre ${i + 1}`);
+  const staffList = block.querySelector('.staff-list');
+
+  if (`Theatre ${i + 1}` === 'Theatre 7' || `Theatre ${i + 1}` === 'Theatre 12') {
+    staffList.innerHTML = '';
+    for (let j = 0; j < 3; j++) addStaffEntry(staffList, 'Scrub N/P');
+    addStaffEntry(staffList, 'HCA');
+    addStaffEntry(staffList, 'Anaes N/P');
+  } else {
+    staffList.innerHTML = '';
+    for (let j = 0; j < 2; j++) addStaffEntry(staffList, 'Scrub N/P');
+    addStaffEntry(staffList, 'HCA');
+    addStaffEntry(staffList, 'Anaes N/P');
+  }
+
+  column1.appendChild(block);
+});
+
+// ✅ Define all columns at the top before appending anything to them
+const column2 = document.createElement("div");
+column2.className = "column";
+
+const column3 = document.createElement("div");
+column3.className = "column";
+
+/* 🔥 NEW: listen for the popup’s “allocate” message */
+const staffAllocations = {}; // Tracks which staff are allocated where
+let selectedForSwap = [];    // Tracks selected staff elements for swapping
+
+window.addEventListener("message", (e) => {
+  if (e.data?.type !== "allocateStaffToTheatre") return;
+
+  const { person, theatre, role } = e.data;
+  if (!person?.name || !person?.shiftTime || !theatre || !role) return;
+
+  const label = `${person.name} (${person.shiftTime})`;
+
+  // Prevent duplicate allocation
+  if (staffAllocations[person.name]) {
+    alert(`${person.name} is already allocated to ${staffAllocations[person.name]}. Please unallocate them first.`);
+    return;
+  }
+
+  // 1. Try inserting into standard theatre staff-entry slots
+  const block = document.querySelector(`.theatre-block[data-theatre="${theatre}"]`);
+  const entries = block ? block.querySelectorAll(".staff-entry") : [];
+  const baseTargetRole = role.split(" ")[0];
+
+  for (const entry of entries) {
+    const nameSpan = entry.querySelector(".name");
+    if (!nameSpan || nameSpan.innerHTML.includes("<strong>")) continue;
+
+    const slotLabel = nameSpan.textContent.trim();
+    const baseEntryRole = slotLabel.split(" ")[0];
+
+    if (baseEntryRole === baseTargetRole) {
+nameSpan.innerHTML = `
+  <strong><span class="clickable-staff" data-name="${person.name}" data-shift="${person.shiftTime}">${person.name}</span></strong> (${person.shiftTime})
+`;
+      entry.dataset.role = slotLabel;
+
+      staffAllocations[person.name] = theatre;
+
+      e.source.postMessage({
+        type: "updateDesignation",
+        name: person.name,
+        theatre,
+      }, "*");
+      return;
+    }
+  }
+
+  // 2. Handle dropdown-based theatres
+  const dropdowns = {
+    "1490": document.getElementById("dropdown-1490"),
+    "1494": document.getElementById("dropdown-1494"),
+    "45871": document.getElementById("dropdown-45871"),
+    "Blank": document.getElementById("dropdown-blank"),
+  };
+
+  if (dropdowns[theatre]) {
+    const dropdown = dropdowns[theatre];
+
+    if (![...dropdown.options].some(opt => opt.value === label)) {
+      dropdown.appendChild(new Option(label, label));
+    }
+
+    dropdown.value = label;
+    staffAllocations[person.name] = theatre;
+
+    e.source.postMessage({
+      type: "updateDesignation",
+      name: person.name,
+      theatre,
+    }, "*");
+    return;
+  }
+
+  // 3. Handle MD (multi-dropdown)
+  if (theatre === "MD") {
+    const mdDropdowns = Array.from(document.querySelectorAll('[id^="md-staff-"]'));
+    for (const dropdown of mdDropdowns) {
+      if (!dropdown.value || dropdown.value === "") {
+        if (![...dropdown.options].some(opt => opt.value === label)) {
+          dropdown.appendChild(new Option(label, label));
+        }
+
+        dropdown.value = label;
+        staffAllocations[person.name] = "MD";
+
+        e.source.postMessage({
+          type: "updateDesignation",
+          name: person.name,
+          theatre: "MD",
+        }, "*");
+        return;
+      }
+    }
+  }
+
+  // 4. If no space was found
+  alert(`No available ${baseTargetRole} slot or dropdown space in ${theatre}.`);
+});
+
+window.addEventListener("message", (e) => {
+  if (e.data?.type === "unallocateStaffFromTheatre") {
+    const { name, theatre } = e.data;
+
+    // 1. Unassign from Theatre block
+    const block = document.querySelector(`.theatre-block[data-theatre="${theatre}"]`);
+    if (block) {
+      const entries = block.querySelectorAll(".staff-entry .name");
+      for (const entry of entries) {
+        if (entry.innerHTML.includes(name)) {
+          entry.innerHTML = entry.parentElement.dataset.role || "Unassigned";
+        }
+      }
+    }
+
+    // 2. Unassign from dropdowns
+    const dropdownId = `dropdown-${theatre.toLowerCase()}`;
+    const dropdown = document.getElementById(dropdownId);
+    if (dropdown) {
+      [...dropdown.options].forEach((opt, idx) => {
+        if (opt.value.includes(name)) dropdown.remove(idx);
       });
+      if (dropdown.value.includes(name)) dropdown.value = "";
     }
 
-    function fetchInventory() {
-      fetch(firebaseUrl)
-        .then(response => response.json())
-        .then(data => {
-          inventory = Object.values(data || {});
-          resultsDiv.innerHTML = '';
-        })
-        .catch(error => {
-          resultsDiv.innerHTML = 'Error loading inventory.';
-          console.error("Firebase fetch error:", error);
+    // 3. Unassign from MD dropdowns
+    if (theatre === "MD") {
+      const mdDropdowns = document.querySelectorAll('[id^="md-staff-"]');
+      for (const dropdown of mdDropdowns) {
+        if (dropdown.value.includes(name)) {
+          dropdown.value = "";
+        }
+      }
+    }
+
+    // ✅ 4. Clear allocation record
+    delete staffAllocations[name];
+  }
+});
+document.addEventListener("click", (e) => {
+  const target = e.target;
+
+  // --- Ctrl + Click for selecting names to swap ---
+  if (e.ctrlKey && target.classList.contains("clickable-staff")) {
+    // Highlight this element
+    target.style.backgroundColor = "#ffff66";
+    selectedForSwap.push(target);
+
+    if (selectedForSwap.length === 2) {
+      const [el1, el2] = selectedForSwap;
+
+      const parent1 = el1.closest(".staff-entry");
+      const parent2 = el2.closest(".staff-entry");
+
+      if (parent1 && parent2) {
+        const span1 = parent1.querySelector(".name");
+        const span2 = parent2.querySelector(".name");
+
+        // Swap contents
+        const temp = span1.innerHTML;
+        span1.innerHTML = span2.innerHTML;
+        span2.innerHTML = temp;
+
+        // Swap dataset.role
+        const tempRole = parent1.dataset.role;
+        parent1.dataset.role = parent2.dataset.role;
+        parent2.dataset.role = tempRole;
+
+        // Swap staffAllocations
+        const name1 = el1.dataset.name;
+        const name2 = el2.dataset.name;
+        const theatre1 = parent1.closest(".theatre-block")?.dataset.theatre;
+        const theatre2 = parent2.closest(".theatre-block")?.dataset.theatre;
+
+        if (name1 && theatre2) staffAllocations[name1] = theatre2;
+        if (name2 && theatre1) staffAllocations[name2] = theatre1;
+
+        // Notify popup
+        window.postMessage({ type: "updateDesignation", name: name1, theatre: theatre2 }, "*");
+        window.postMessage({ type: "updateDesignation", name: name2, theatre: theatre1 }, "*");
+      }
+
+      // Remove highlights and clear selection
+      selectedForSwap.forEach(el => (el.style.backgroundColor = ""));
+      selectedForSwap = [];
+    }
+  } else if (!e.ctrlKey) {
+    // Deselect all if clicked without Ctrl
+    selectedForSwap.forEach(el => (el.style.backgroundColor = ""));
+    selectedForSwap = [];
+  }
+});
+
+// --- Ctrl + Double Click to Unallocate ---
+document.addEventListener("dblclick", (e) => {
+  const target = e.target;
+  if (e.ctrlKey && target.classList.contains("clickable-staff")) {
+    const name = target.dataset.name;
+    const shift = target.dataset.shift;
+
+    const staffEntry = target.closest(".staff-entry");
+    if (staffEntry) {
+      const originalLabel = staffEntry.dataset.role || "Unassigned";
+      const nameSpan = staffEntry.querySelector(".name");
+      nameSpan.innerHTML = originalLabel;
+
+      // Remove from allocations
+      delete staffAllocations[name];
+
+      // Notify popup
+      window.postMessage({ type: "updateDesignation", name, theatre: "" }, "*");
+    }
+
+    // Also remove highlight
+    target.style.backgroundColor = "";
+  }
+});
+
+// 🔹 Add/Remove Staff Controls block
+const addRemoveBlock = document.createElement("div");
+addRemoveBlock.style.backgroundColor = "#f0f0f0";
+addRemoveBlock.style.padding = "10px";
+addRemoveBlock.style.borderRadius = "6px";
+addRemoveBlock.style.marginBottom = "6px";
+addRemoveBlock.style.display = "flex";
+addRemoveBlock.style.flexDirection = "column";
+addRemoveBlock.style.gap = "6px";
+addRemoveBlock.innerHTML = `
+
+<div class="no-print">
+<strong style="font-size: 20px;">Add/Remove Staff Role:</strong>
+<div style="display: flex; align-items: center; gap: 10px; flex-wrap: wrap;">
+
+  <label for="theatre-select" style="font-size: 20px;">Theatre:</label>
+  <select id="theatre-select" class="stacked-input" 
+          style="font-size: 20px; width: 140px;">
+    <option value=""> </option>
+    <option>Theatre 1</option><option>Theatre 2</option><option>Theatre 3</option>
+    <option>Theatre 4</option><option>Theatre 5</option><option>Theatre 6</option>
+    <option>Theatre 7</option><option>Theatre 8</option><option>Theatre 9</option>
+    <option>Theatre 10</option><option>Theatre 11</option><option>Theatre 12</option>
+    <option>ACAD 1</option><option>ACAD 2</option><option>ACAD 3</option>
+    <option>ACAD 4</option><option>ACAD 5</option><option>ACAD 6</option>
+    <option>ACAD 7</option><option>ACAD 8</option>
+    <option>Mile End</option><option>Night</option><option>MD</option>
+  </select>
+
+  <label for="role-select" style="font-size: 20px;">Role:</label>
+  <select id="role-select" class="stacked-input" 
+          style="font-size: 20px; width: 140px;">
+    <option value=""> </option>
+    <option value="Scrub N/P">Scrub N/P</option>
+    <option value="HCA">HCA</option>
+    <option value="Anaes N/P">Anaes N/P</option>
+    <option value="Cell Salvage">Cell Salvage</option>
+  </select>
+
+  <button onclick="addStaffToTheatre()" class="round-icon-button purple-button">＋</button>
+  <button onclick="removeStaffFromTheatre()" class="round-icon-button purple-button">−</button>
+</div>
+`;
+column3.appendChild(addRemoveBlock);
+
+// ==== MAIN WINDOW (add once, after theatre blocks are on the page) ====
+function getRoleSlotsByTheatre() {
+  const map = {};
+  document.querySelectorAll('.theatre-block').forEach(block => {
+    const label = block.querySelector('.left-cell div')?.textContent.trim();
+    if (!label) return;
+
+    // grab every role label (strips the optional ⭐ suffix)
+    const roles = Array.from(
+      block.querySelectorAll('.staff-entry .name')
+    ).map(el => el.textContent.replace(' ⭐', '').trim());
+
+    map[label] = roles;
+  });
+  return map;
+}
+
+
+// 🔹 Block labeled "45871"
+const block45871 = document.createElement("div");
+block45871.className = "theatre-block";
+
+const left45871 = document.createElement("div");
+left45871.className = "left-cell";
+left45871.innerHTML = `<div>45871</div>`;
+
+const right45871 = document.createElement("div");
+right45871.className = "right-cell";
+right45871.innerHTML = `
+  <div class="stacked-label">
+    <select id="dropdown-45871" class="stacked-input">
+      <option value="">-- Select Option --</option>
+      <option>Option A</option>
+      <option>Option B</option>
+    </select>
+  </div>
+`;
+
+block45871.appendChild(left45871);
+block45871.appendChild(right45871);
+column2.appendChild(block45871);
+
+// 🔹 Blank-labeled block with dropdown
+const blankBlock = document.createElement("div");
+blankBlock.className = "theatre-block";
+
+const leftBlank = document.createElement("div");
+leftBlank.className = "left-cell";
+leftBlank.innerHTML = `<div>&nbsp;</div>`;  // Keeps cell height & spacing
+
+const rightBlank = document.createElement("div");
+rightBlank.className = "right-cell";
+rightBlank.innerHTML = `
+  <div class="stacked-label">
+    <select id="dropdown-blank" class="stacked-input">
+      <option value="">-- Select Option --</option>
+      <option>Option A</option>
+      <option>Option B</option>
+    </select>
+  </div>
+`;
+
+blankBlock.appendChild(leftBlank);
+blankBlock.appendChild(rightBlank);
+column2.appendChild(blankBlock);
+[...Array(8).keys()].forEach((i) => {
+  const block = createTheatreBlock(`ACAD ${i + 1}`);
+  const staffList = block.querySelector('.staff-list');
+  staffList.innerHTML = '';
+
+  if (`ACAD ${i + 1}` === 'ACAD 1') {
+    for (let j = 0; j < 2; j++) addStaffEntry(staffList, 'Scrub N/P');
+    addStaffEntry(staffList, 'HCA');
+    addStaffEntry(staffList, 'Anaes N/P');
+  } else {
+    for (let j = 0; j < 2; j++) addStaffEntry(staffList, 'Scrub N/P');
+    addStaffEntry(staffList, 'HCA');
+    addStaffEntry(staffList, 'Anaes N/P');
+  }
+
+  column2.appendChild(block);
+});
+column2.appendChild(createTheatreBlock("Mile End"));
+const nightBlock = createTheatreBlock("Night");
+const nightStaffList = nightBlock.querySelector('.staff-list');
+nightStaffList.innerHTML = '';
+for (let i = 0; i < 7; i++) addStaffEntry(nightStaffList, 'Scrub N/P');
+for (let i = 0; i < 2; i++) addStaffEntry(nightStaffList, 'HCA');
+for (let i = 0; i < 3; i++) addStaffEntry(nightStaffList, 'Anaes N/P');
+column2.appendChild(nightBlock);
+
+const uploadBlock = document.createElement("div");
+uploadBlock.style.backgroundColor = "#f0f0f0";
+uploadBlock.style.padding = "16px";
+uploadBlock.style.borderRadius = "6px";
+uploadBlock.style.marginBottom = "10px";
+uploadBlock.style.fontSize = "20px";
+uploadBlock.style.display = "flex";
+uploadBlock.style.flexDirection = "column";
+uploadBlock.style.gap = "12px";
+
+uploadBlock.innerHTML = `
+<div class="no-print">
+  <div style="font-weight: bold; font-size: 22px; margin-bottom: 4px;">Upload Daily Health Roster File</div>
+  <div style="display: flex; flex-direction: column; gap: 12px;">
+
+    <!-- Row 1: Scrub DSR -->
+    <div style="display: flex; align-items: center; gap: 10px;">
+      <input type="file" id="fileInputScrub" accept="application/pdf" style="display: none;" onchange="showUploadedFileName(this, 'scrubUploadName', 'scrubStatusLabel')" />
+      <button onclick="document.getElementById('fileInputScrub').click()" style="font-size: 18px; background-color: #005EB8; color: white; border: none; padding: 8px 12px; border-radius: 4px;">Upload Scrub DSR</button>
+      <span id="scrubStatusLabel" style="font-size: 18px; color: green;"></span>
+      <button onclick="clearUpload('fileInputScrub', 'scrubUploadName', 'scrubStatusLabel')" style="font-size: 18px; background-color: #d9534f; color: white; border: none; padding: 8px 12px; border-radius: 4px;">Clear</button>
+    </div>
+    <div id="scrubUploadName" style="margin-left: 10px;"></div>
+
+    <!-- Row 2: Anaes DSR -->
+    <div style="display: flex; align-items: center; gap: 10px;">
+      <input type="file" id="fileInputODP" accept="application/pdf" style="display: none;" onchange="showUploadedFileName(this, 'odpUploadName', 'odpStatusLabel')" />
+      <button onclick="document.getElementById('fileInputODP').click()" style="font-size: 18px; background-color: #005EB8; color: white; border: none; padding: 8px 12px; border-radius: 4px;">Upload Anaes DSR</button>
+      <span id="odpStatusLabel" style="font-size: 18px; color: green;"></span>
+      <button onclick="clearUpload('fileInputODP', 'odpUploadName', 'odpStatusLabel')" style="font-size: 18px; background-color: #d9534f; color: white; border: none; padding: 8px 12px; border-radius: 4px;">Clear</button>
+    </div>
+    <div id="odpUploadName" style="margin-left: 10px;"></div>
+
+    <!-- Row 3: View & Auto-Allocate Buttons -->
+    <div style="display: flex; gap: 12px; margin-top: 10px;">
+      <button onclick="openHealthRosterWindow()" 
+        style="
+          font-size: 18px; 
+          background-color: #6a0dad;  /* Purple */
+          color: white; 
+          border: none; 
+          padding: 8px 14px; 
+          border-radius: 4px;
+          cursor: pointer;
+        ">
+        👥 View Full Staff List
+      </button>
+
+      <button onclick="autoAllocateStaff()"
+        style="
+          font-size: 18px;
+          background-color: #28a745;
+          color: white;
+          border: none;
+          padding: 8px 14px;
+          border-radius: 4px;
+          cursor: pointer;
+        ">
+        ⚡ Auto-Allocate
+      </button>
+    </div>
+
+  </div>
+</div>
+`;
+function autoAllocateStaff() {
+  if (!parsedRosterData || parsedRosterData.length === 0) {
+    alert("No staff data available to auto-allocate.");
+    return;
+  }
+
+  const allocated = new Set();
+
+  // Helper to find matching staff
+  function findAndAllocate(filterFn, targetTheatre, roleLabel) {
+    const candidates = parsedRosterData.filter(p => filterFn(p) && !allocated.has(p.name));
+    const theatreBlock = document.querySelector(`.theatre-block[data-theatre="${targetTheatre}"]`);
+    if (!theatreBlock) return;
+
+    const slots = theatreBlock.querySelectorAll(".staff-entry .name");
+    for (const span of slots) {
+      const slotLabel = span.textContent.trim();
+      const baseRole = slotLabel.split(" ")[0];
+      if (baseRole !== roleLabel) continue;
+      if (span.innerHTML.includes("<strong>")) continue;
+
+      const match = candidates.shift();
+      if (!match) break;
+
+      span.innerHTML = `<strong><span class="clickable-staff" data-name="${match.name}" data-shift="${match.shiftTime}">${match.name}</span></strong> (${match.shiftTime})`;
+      span.parentElement.dataset.role = slotLabel;
+      allocated.add(match.name);
+
+      staffAllocations[match.name] = targetTheatre;
+
+      window.postMessage({ type: "updateDesignation", name: match.name, theatre: targetTheatre }, "*");
+    }
+  }
+
+  // THEATRE 7 and 12 — anyone with shift 08:00-08:30
+  const morningFilter = p => /08:00\s*-\s*08:30/i.test(p.shiftTime);
+
+  findAndAllocate(p => morningFilter(p) && p.role === "Scrub N/P" && p.band === "6", "Theatre 7", "Scrub N/P");
+  findAndAllocate(p => morningFilter(p) && p.role === "Scrub N/P", "Theatre 7", "Scrub N/P");
+  findAndAllocate(p => morningFilter(p) && p.role === "HCA", "Theatre 7", "HCA");
+
+  findAndAllocate(p => morningFilter(p) && p.role === "Scrub N/P" && p.band === "6", "Theatre 12", "Scrub N/P");
+  findAndAllocate(p => morningFilter(p) && p.role === "Scrub N/P", "Theatre 12", "Scrub N/P");
+  findAndAllocate(p => morningFilter(p) && p.role === "HCA", "Theatre 12", "HCA");
+
+  // NIGHT — shift starts at 20:00
+  const nightFilter = p => /^20:00/.test(p.shiftTime);
+
+  findAndAllocate(p => nightFilter(p) && p.role === "Scrub N/P", "Night", "Scrub N/P");
+  findAndAllocate(p => nightFilter(p) && p.role === "HCA", "Night", "HCA");
+  findAndAllocate(p => nightFilter(p) && p.role === "Anaes N/P", "Night", "Anaes N/P");
+
+  // THEATRE 9 & 10 — Orthopaedics Team, Scrub N/P with band ≥5
+  const orthoFilter = p => p.team === "Orthopaedics" && p.role === "Scrub N/P" && ["5", "6", "7"].includes(p.band);
+
+  findAndAllocate(orthoFilter, "Theatre 9", "Scrub N/P");
+  findAndAllocate(p => p.team === "Orthopaedics" && p.role === "HCA", "Theatre 9", "HCA");
+
+  findAndAllocate(orthoFilter, "Theatre 10", "Scrub N/P");
+  findAndAllocate(p => p.team === "Orthopaedics" && p.role === "HCA", "Theatre 10", "HCA");
+
+  alert("Auto-allocation complete.");
+}
+
+// Create MD block with dynamic dropdowns
+const mdBlock = document.createElement("div");
+mdBlock.className = "theatre-block";
+
+const mdLeft = document.createElement("div");
+mdLeft.className = "left-cell";
+mdLeft.innerHTML = `<div>MD</div>`;
+
+const mdRight = document.createElement("div");
+mdRight.className = "right-cell";
+
+// Dropdown container
+const mdDropdownContainer = document.createElement("div");
+mdDropdownContainer.id = "mdDropdownContainer";
+mdDropdownContainer.style.display = "flex";
+mdDropdownContainer.style.flexDirection = "column";
+mdDropdownContainer.style.gap = "4px";
+
+// Dropdown generator
+// Dropdown generator (blank, to be populated later)
+function createMdDropdown(index) {
+  const select = document.createElement("select");
+  select.id = `md-staff-${index}`;
+  select.className = "stacked-input";
+  select.innerHTML = `<option value="">-- Select Staff --</option>`; // to be populated later
+
+  // 🔹 Track the previously selected staff name
+  let previousName = "";
+
+  select.onchange = () => {
+    const selectedValue = select.value;
+
+    // Extract name if present
+    const nameMatch = selectedValue.match(/^(.+?) \(/);
+    const currentName = nameMatch ? nameMatch[1] : "";
+
+    // 🔻 If "-- Select Staff --" is chosen (value is empty), unassign previous
+    if (!selectedValue && previousName) {
+      window.postMessage(
+        {
+          type: "unassignDesignation",
+          name: previousName
+        },
+        "*"
+      );
+      previousName = "";
+    }
+
+    // ✅ If a new name is selected
+    if (currentName) {
+      window.postMessage(
+        {
+          type: "updateDesignation",
+          name: currentName,
+          theatre: "MD"
+        },
+        "*"
+      );
+      previousName = currentName;
+    }
+  };
+
+  return select;
+}
+
+// Add initial dropdown
+mdDropdownContainer.appendChild(createMdDropdown(0));
+
+// Add/Remove buttons
+const mdAddButton = document.createElement("button");
+mdAddButton.textContent = "+";
+mdAddButton.style.fontSize = "12px";
+mdAddButton.onclick = () => {
+  const newIndex = mdDropdownContainer.children.length;
+  mdDropdownContainer.appendChild(createMdDropdown(newIndex));
+};
+
+const mdRemoveButton = document.createElement("button");
+mdRemoveButton.textContent = "−";
+mdRemoveButton.style.fontSize = "12px";
+mdRemoveButton.onclick = () => {
+  if (mdDropdownContainer.children.length > 1) {
+    mdDropdownContainer.removeChild(mdDropdownContainer.lastChild);
+  }
+};
+
+// Button group
+const mdControlPanel = document.createElement("div");
+mdControlPanel.style.display = "flex";
+mdControlPanel.style.gap = "4px";
+mdControlPanel.appendChild(mdAddButton);
+mdControlPanel.appendChild(mdRemoveButton);
+
+// Assemble MD block
+mdRight.appendChild(mdDropdownContainer);
+mdRight.appendChild(mdControlPanel);
+
+mdBlock.appendChild(mdLeft);
+mdBlock.appendChild(mdRight);
+
+// Append to column
+column3.appendChild(mdBlock);
+column3.appendChild(uploadBlock); // Upload stays in the middle
+column3.appendChild(addRemoveBlock); // Moved to the bottom under MD
+
+
+gridContainer.appendChild(column1);
+gridContainer.appendChild(column2);
+gridContainer.appendChild(column3);
+});
+function showUploadedFileName(input, linkContainerId, statusLabelId) {
+  const file = input.files[0];
+  if (!file) return;
+
+  const blobUrl = URL.createObjectURL(file);
+
+  document.getElementById(linkContainerId).innerHTML =
+    `<a href="${blobUrl}" target="_blank" style="font-size: 18px; color: #0074cc;">${file.name}</a>`;
+
+  document.getElementById(statusLabelId).textContent = "Uploaded 👍";
+}
+
+function clearUpload(inputId, linkContainerId, statusLabelId) {
+  const input = document.getElementById(inputId);
+  input.value = "";
+  document.getElementById(linkContainerId).innerHTML = "";
+  document.getElementById(statusLabelId).textContent = "";
+}
+
+function viewUploadedPDF(inputId) {
+  const fileInput = document.getElementById(inputId);
+  const file = fileInput.files[0];
+  if (!file) {
+    alert("No PDF uploaded yet.");
+    return;
+  }
+
+  const blobUrl = URL.createObjectURL(file);
+  window.open(blobUrl, "_blank");
+}
+
+let parsedRosterData = []; // This holds your real parsed data
+
+function getParsedRosterData() {
+  return parsedRosterData;
+}
+
+function allocateFromParsedRoster(person, theatreLabel, roleLabel) {
+  // Example logic: find the correct Theatre block and insert person
+  const theatreBlock = document.querySelector(`[data-theatre="${theatreLabel}"]`);
+  if (!theatreBlock) return;
+
+  const roleSlots = theatreBlock.querySelectorAll(`[data-role="${roleLabel}"]`);
+  for (const slot of roleSlots) {
+    if (!slot.textContent.trim()) {
+      slot.innerHTML = `<strong>${person.name}</strong> (${person.shiftTime})`;
+      break;
+    }
+  }
+}
+
+function parseUploadedPDF(file, uploadSource) {
+  return new Promise(async (resolve) => {
+    const arrayBuffer = await file.arrayBuffer();
+    const pdf = await pdfjsLib.getDocument({ data: arrayBuffer }).promise;
+
+    const shiftRegex = /(08:00\s*-\s*18:00|08:00\s*-\s*20:00|08:00\s*-\s*20:30|20:00\s*-\s*08:00|20:00\s*-\s*08:30|20:30\s*-\s*08:00)/;
+    const classificationRegex = /(RN|ODP|HCA)\s+Band\s+([3-7])/i;
+    const nameRegex = /^[A-Z][a-z]+,\s*[A-Z][a-z]+|^[A-Z][a-z]+\s+[A-Z][a-z]+/;
+
+    const staffList = [];
+    let currentTitle = "";
+    let currentBand = "";
+    let currentName = "";
+    let currentClassification = "";
+
+    for (let i = 1; i <= pdf.numPages; i++) {
+      const page = await pdf.getPage(i);
+      const content = await page.getTextContent();
+      const items = content.items.map(item => item.str.trim());
+      const unwantedWords = ["Shift Type", "Shift", "Page", "Generated", "Scrub", "Location","Allocate", "Fulfilment", "Type",  "Band"]; // Add more if needed
+
+      for (let j = 0; j < items.length; j++) {
+        const line = items[j];
+      
+        // Detect classification
+        const match = line.match(classificationRegex);
+        if (match) {
+          currentTitle = match[1].toUpperCase(); // RN, ODP, HCA
+          currentBand = match[2];
+          currentClassification = match[0];
+          continue;
+        }
+
+        // Detect name
+        if (nameRegex.test(line)) {
+          currentName = line;
+        }
+
+        // Detect shift
+        if (shiftRegex.test(line)) {
+          const shiftTime = line.match(shiftRegex)[0];
+
+if (currentName && currentTitle && currentBand) {
+  // 🔹 Format name: "T Chiimba"
+  let formattedName = currentName;
+  const nameParts = currentName.includes(',')
+    ? currentName.split(',').map(s => s.trim())
+    : currentName.split(' ');
+
+  if (nameParts.length >= 2) {
+    const last = nameParts[0];
+    const first = nameParts[1];
+    formattedName = `${first.charAt(0)} ${last}`;
+  }
+
+  // 🔹 Determine role
+  let role = uploadSource === "Anaes N/P" ? "Anaes N/P" : "Scrub N/P";
+  if (uploadSource === "Scrub N/P" && currentTitle === "HCA") role = "HCA";
+  if (currentBand === "7") role = "Senior Team Lead";
+
+  // 🔹 Assign team
+  let team = "";
+  if (shiftTime.startsWith("20:00") || shiftTime.startsWith("20:30")) {
+    team = "NIGHT";
+  } else if (uploadSource === "Anaes N/P") {
+    team = "Anaesthetics";
+
+  } else {
+    const teamMatch = items[j + 1]?.match(/^(General|OMFS|ENT|Urology|Gynae|Plastics|Orthopaedics|Vascular|Neurosurgery|Emergency)/i);
+    team = teamMatch ? teamMatch[0] : "";
+  }
+
+  // 🔹 Push staff object
+  staffList.push({
+    role,
+    title: currentTitle,
+    name: formattedName,
+    band: currentBand,
+    shiftTime,
+    team,
+    designation: ""
+  });
+
+  currentName = "";
+}
+
+        }
+      }
+    }
+
+    resolve(staffList);
+  });
+}
+function populateSpecialDropdowns() {
+  const dropdown1490 = document.getElementById("dropdown-1490");
+  const dropdown45871 = document.getElementById("dropdown-45871");
+  const dropdownBlank = document.getElementById("dropdown-blank");
+  const dropdown1494 = document.getElementById("dropdown-1494");
+
+  if (!parsedRosterData.length) return;
+
+  // ✅ Band 6 or 7 (non-night)
+  const seniorStaff = parsedRosterData.filter(p =>
+    (p.band === "6" || p.band === "7") &&
+    !p.shiftTime.startsWith("20:00")
+  );
+
+  // ✅ Band 6 or 7 AND title is RN or role is Scrub N/P
+  const seniorScrubStaff = seniorStaff.filter(p =>
+    p.title === "RN" || (p.role && p.role === "Scrub N/P")
+  );
+
+  // ✅ Anaesthetics Band 6/7 only
+  const anaestheticsSeniorStaff = seniorStaff.filter(p =>
+    p.team && p.team.toUpperCase().includes("ANAESTHETICS")
+  );
+
+  // ✅ Band 7 only
+  const band7Staff = parsedRosterData.filter(p => p.band === "7");
+
+  function fillDropdown(dropdown, staffList) {
+    if (!dropdown) return;
+    dropdown.innerHTML = `<option value="">-- Select Staff --</option>`;
+    staffList.forEach(person => {
+      const label = `${person.name} (${person.shiftTime})`;
+      dropdown.appendChild(new Option(label, label));
+    });
+  }
+
+  fillDropdown(dropdown1490, seniorStaff);
+  fillDropdown(dropdown45871, seniorStaff);
+  fillDropdown(dropdownBlank, seniorScrubStaff);
+  fillDropdown(dropdown1494, anaestheticsSeniorStaff);
+
+  // ✅ Populate all md-staff-* dropdowns
+  const mdDropdowns = Array.from(document.querySelectorAll('[id^="md-staff-"]'));
+  mdDropdowns.forEach(dropdown => {
+    dropdown.innerHTML = `<option value="">-- Select Staff --</option>`;
+    band7Staff.forEach(person => {
+      const label = `${person.name} (${person.shiftTime})`;
+      dropdown.appendChild(new Option(label, label));
+    });
+  });
+}
+async function processBothPDFs() {
+  const scrubFile = document.getElementById("fileInputScrub").files[0];
+  const odpFile = document.getElementById("fileInputODP").files[0];
+
+  const scrubData = scrubFile ? await parseUploadedPDF(scrubFile, "Scrub N/P") : [];
+  const odpData = odpFile ? await parseUploadedPDF(odpFile, "Anaes N/P") : [];
+
+  parsedRosterData = [...scrubData, ...odpData];
+populateSpecialDropdowns(); // ✅ Call it here
+}
+async function openHealthRosterWindow() {
+  await processBothPDFs();
+
+  const win = window.open("", "_blank", "width=1000,height=700");
+  const doc = win.document;
+
+  doc.write(`
+       <html>
+      <head>
+        <title>Daily Staffing Report</title>
+        <style>
+          body {
+            font-family: Arial, sans-serif;
+            padding: 20px;
+          }
+       .roster-row,
+.roster-header {
+  min-width: 1000px; /* or whatever fits all columns */
+  width: max-content;
+display: grid;
+  grid-template-columns:
+    220px   /* Role (icons + long label) */
+    120px   /* Title */
+    200px   /* Name */
+    130px    /* Band */
+    130px   /* Team */
+    130px   /* Shift */
+    130px;  /* Designation */
+  gap: 40px;
+  align-items: center;
+  font-size: 18px;
+  padding: 6px 0;
+  border-bottom: 1px solid #ccc;
+  cursor: context-menu;
+  transition: background-color 0.2s ease-in-out;
+}
+
+.roster-row:hover {
+  background-color: #e0ccff;
+}
+
+.roster-row.highlighted {
+  background-color: #e0ccff;
+  outline: 2px solid #e0ccff;
+}
+.roster-row.allocated-row {
+  background-color: #fff9c4; /* Light yellow */
+  border-left: 4px solid #ffd700; /* Optional: visual indicator */
+}
+.roster-header {
+  display: grid;
+  grid-template-columns:
+  210px   /* Role */
+  150px   /* Title */
+  170px   /* Name */
+  160px    /* Band */
+  170px   /* Team */
+  95px   /* Shift Time */
+  130px;  /* Designation */
+  gap: 32px;
+  font-weight: bold;
+  background-color: #f0f0f0;
+  color: #000;
+  padding: 10px 16px;
+  border-radius: 12px;
+  box-shadow:
+    inset 0 2px 4px rgba(255, 255, 255, 0.2),
+    inset 0 -2px 4px rgba(0, 0, 0, 0.2),
+    0 2px 6px rgba(0, 0, 0, 0.2);
+}
+
+.roster-header > div {
+  transition: color 0.2s ease;
+  cursor: pointer;
+}
+
+.roster-header > div:hover {
+  color: #B026FF; /* Neon purple */
+}
+
+
+h2 {
+  background-color: #005EB8; /* NHS Blue */
+  color: white;
+  padding: 40px 20px;
+  border-radius: 8px;
+  font-size: 24px;
+  width: 100%;
+  box-sizing: border-box;
+  margin: 0 auto 20px auto;
+  box-shadow:
+    inset 0 1px 2px rgba(255, 255, 255, 0.2),
+    inset 0 -1px 2px rgba(0, 0, 0, 0.2),
+    0 2px 5px rgba(0, 0, 0, 0.2);
+}
+          #contextMenu {
+            position: absolute;
+            display: none;
+            background: white;
+            border: 1px solid #ccc;
+            box-shadow: 2px 2px 6px rgba(0, 0, 0, 0.2);
+            z-index: 1000;
+            min-width: 150px;
+          }
+          #contextMenu > div {
+            padding: 8px 12px;
+            cursor: pointer;
+            position: relative;
+          }
+          #contextMenu > div:hover {
+            background-color: #e0ccff;
+          }
+           .submenu-item {
+            background: white;
+            color: black;
+            padding: 8px 12px;
+            cursor: pointer;
+            position: relative;
+           }
+
+           .submenu-item:hover {
+            background-color: #e0ccff;
+           }
+          .submenu {
+           display: none;
+           position: absolute;
+           top: 0;
+           left: 100%;
+           background: white;
+           color: black; /* <-- important */
+           border: 1px solid #ccc;
+           z-index: 1001;
+           min-width: 150px;
+          }
+
+          .submenu-item:hover > .submenu {
+           display: block;
+          }
+
+  </style>
+      </head>
+      <body>
+<div style="max-width: 1200px; margin: 0 auto;">
+  <h2>Daily Staffing Report</h2>
+  <input 
+  id="searchBox" 
+  type="text" 
+  placeholder="Search staff by name, role, or team..." 
+  style="margin-bottom: 16px; font-size: 16px; padding: 8px; width: 40ch; max-width: 100%; border: 1px solid #ccc; border-radius: 6px;" 
+/>
+<div style="margin-bottom: 12px;">
+  <button id="addStaffBtn" style="margin-right: 12px; font-size: 16px; padding: 6px 12px;">➕ Add Staff</button>
+  <button id="removeStaffBtn" style="font-size: 16px; padding: 6px 12px;">➖ Remove Selected Staff</button>
+</div>
+
+
+<div style="overflow-y: auto; max-height: 70vh;">
+  <div class="roster-header" style="position: sticky; top: 0; background: white; z-index: 1; display: grid; font-weight: bold;">
+    <div data-key="role">Role</div>
+    <div data-key="title">Title</div>
+    <div data-key="name">Name</div>
+    <div data-key="band">Band</div>
+    <div data-key="team">Team</div>
+    <div data-key="shiftTime">Shift</div>
+    <div data-key="designation">Designation</div>
+  </div>
+  <div id="rosterBody"></div>
+</div>
+
+<div id="contextMenu"></div>
+      </body>
+    </html>
+  `);
+  doc.close();
+
+  
+setTimeout(() => {
+  const rosterBody = win.document.getElementById("rosterBody");
+  const contextMenu = win.document.getElementById("contextMenu");
+  const searchInput = win.document.getElementById("searchBox");
+  searchInput.addEventListener("input", () => {
+    filterText = searchInput.value.trim().toLowerCase();
+    renderRoster();
+   });
+
+  let selectedIndex = null;
+  let editingIndex = null;
+  let sortKey = null;
+  let sortOrder = 1; // 1 = ascending, -1 = descending
+  let filterText = "";
+
+
+
+  if (parsedRosterData.length === 0) {
+  rosterBody.innerHTML = `<div style="grid-column: span 6; font-size: 16px; color: red;">
+    No staff parsed. Please upload the Daily Health Roster.
+  </div>`;
+  return;
+}
+  function renderRoster() {
+    if (!parsedRosterData || parsedRosterData.length === 0) {
+      rosterBody.innerHTML = `<div style="grid-column: span 6; font-size: 16px; color: red;">
+        No staff parsed. Please check the uploaded PDFs.
+      </div>`;
+      return;
+    }
+let filteredData = parsedRosterData;
+if (filterText) {
+  filteredData = parsedRosterData.filter(p =>
+    (p.role || "").toLowerCase().includes(filterText) ||
+    (p.title || "").toLowerCase().includes(filterText) ||
+    (p.name || "").toLowerCase().includes(filterText) ||
+    (p.team || "").toLowerCase().includes(filterText) ||
+    (p.shiftTime || "").toLowerCase().includes(filterText) ||
+    (p.designation || "").toLowerCase().includes(filterText)
+  );
+}
+if (sortKey) {
+  parsedRosterData.sort((a, b) => {
+    const valA = (a[sortKey] || "").toString().toUpperCase();
+    const valB = (b[sortKey] || "").toString().toUpperCase();
+    return valA.localeCompare(valB) * sortOrder;
+  });
+}
+    rosterBody.innerHTML = "";
+    filteredData.forEach((p, i) => {
+
+  const row = win.document.createElement("div");
+  row.className = "roster-row";
+  row.dataset.index = i;
+
+  if (p.designation && p.designation !== "") {
+    row.classList.add("allocated-row"); // ✅ New class for yellow highlight
+  }
+
+
+
+      const isEditing = i === editingIndex;
+
+      row.innerHTML = `
+        <div>
+          <button onclick="editRosterRow(${i})" style="border:none; background:none; cursor:pointer;" title="${isEditing ? 'Save' : 'Edit'}">
+            ${isEditing ? "💾" : "✏️"}
+          </button>
+          ${isEditing ? `<input id="edit-role-${i}" value="${p.role}" style="width:100px; font-size:18px; font-family:inherit;">` : p.role}
+        </div>
+        <div>${isEditing ? `<input id="edit-title-${i}" value="${p.title}" style="width:80px; font-size:18px; font-family:inherit;">` : p.title}</div>
+        <div>${isEditing ? `<input id="edit-name-${i}" value="${p.name}" style="width:130px; font-size:18px; font-family:inherit;">` : p.name}</div>
+        <div>${isEditing ? `<input id="edit-band-${i}" value="${p.band}" style="width:60px; font-size:18px; font-family:inherit;">` : p.band}</div>
+        <div>${isEditing ? `<input id="edit-team-${i}" value="${p.team}" style="width:120px; font-size:18px; font-family:inherit;">` : (p.team || "")}</div>
+        <div>${isEditing ? `<input id="edit-shift-${i}" value="${p.shiftTime}" style="width:120px; font-size:18px; font-family:inherit;">` : (p.shiftTime || "")}</div>
+        <div>${p.designation || ""}</div>
+      `;
+
+      if (isEditing) {
+        row.querySelectorAll("input").forEach(input => {
+          input.addEventListener("keydown", (e) => {
+            if (e.key === "Enter") {
+              saveEdits(i);
+            } else if (e.key === "Escape") {
+              editingIndex = null;
+              renderRoster();
+            }
+          });
         });
+      }
+
+      row.addEventListener("click", () => {
+  selectedIndex = i;
+  win.document.querySelectorAll(".roster-row").forEach(r => r.classList.remove("highlighted"));
+  row.classList.add("highlighted");
+});
+
+row.addEventListener("contextmenu", (e) => {
+  e.preventDefault();
+  selectedIndex = i;
+  win.document.querySelectorAll(".roster-row").forEach(r => r.classList.remove("highlighted"));
+  row.classList.add("highlighted");
+  buildContextMenu(e.pageX, e.pageY);
+});
+
+      rosterBody.appendChild(row);
+    });
+  }
+const headerCells = win.document.querySelectorAll(".roster-header > div");
+headerCells.forEach(cell => {
+  const key = cell.dataset.key;
+  cell.addEventListener("click", () => {
+    if (sortKey === key) {
+      sortOrder *= -1; // Toggle sort order
+    } else {
+      sortKey = key;
+      sortOrder = 1;
+    }
+    renderRoster();
+  });
+});
+
+  function saveEdits(index) {
+    const person = parsedRosterData[index];
+    person.role = win.document.getElementById(`edit-role-${index}`).value;
+    person.title = win.document.getElementById(`edit-title-${index}`).value;
+    person.name = win.document.getElementById(`edit-name-${index}`).value;
+    person.band = win.document.getElementById(`edit-band-${index}`).value;
+    person.team = win.document.getElementById(`edit-team-${index}`).value;
+    person.shiftTime = win.document.getElementById(`edit-shift-${index}`).value;
+
+    editingIndex = null;
+    renderRoster();
+  }
+
+  win.editRosterRow = function(index) {
+    if (editingIndex === index) {
+      saveEdits(index);
+    } else {
+      editingIndex = index;
+      renderRoster();
+    }
+  };
+// ✅ Add Staff
+win.document.getElementById("addStaffBtn").addEventListener("click", () => {
+  parsedRosterData.unshift({
+  role: "Scrub N/P",
+  title: "RN",
+  name: "New Staff",
+  band: "5",
+  team: "",
+  shiftTime: "",
+  designation: ""
+});
+  renderRoster();
+});
+
+// ✅ Remove Selected Staff
+win.document.getElementById("removeStaffBtn").addEventListener("click", () => {
+  if (selectedIndex !== null && parsedRosterData[selectedIndex]) {
+    parsedRosterData.splice(selectedIndex, 1);
+    selectedIndex = null;
+    renderRoster();
+  } else {
+    alert("Please select a staff row first.");
+  }
+});
+  renderRoster();
+
+  window.addEventListener("message", (e) => {
+    if (e.data?.type === "updateDesignation") {
+      const { name, theatre } = e.data;
+      const person = parsedRosterData.find(p => p.name === name);
+      if (person) {
+        person.designation = theatre;
+        renderRoster();
+      }
+    }
+  });
+    function buildContextMenu(x, y) {
+  contextMenu.innerHTML = "";
+
+  // Only two actions: Allocate and Unallocate
+  const actions = ["Allocate", "Unallocate"];
+
+  actions.forEach(action => {
+    const div = win.document.createElement("div");
+    div.textContent = action;
+    div.className = action === "Allocate" ? "submenu-item" : "submenu-item";
+
+    if (action === "Allocate") {
+      const submenu = win.document.createElement("div");
+      submenu.className = "submenu";
+
+      const theatres = [
+        "Theatre 1", "Theatre 2", "Theatre 3", "Theatre 4", "Theatre 5", "Theatre 6",
+        "Theatre 7", "Theatre 8", "Theatre 9", "Theatre 10", "Theatre 11", "Theatre 12",
+        "ACAD 1", "ACAD 2", "ACAD 3", "ACAD 4", "ACAD 5", "ACAD 6", "ACAD 7", "ACAD 8",
+        "Mile End", "Night"
+      ];
+
+      theatres.forEach(theatre => {
+        const theatreDiv = win.document.createElement("div");
+        theatreDiv.textContent = theatre;
+        theatreDiv.className = "submenu-item";
+        theatreDiv.style.position = "relative";
+
+        theatreDiv.addEventListener("mouseenter", () => {
+          const existing = theatreDiv.querySelector(".submenu");
+          if (existing) existing.remove();
+
+          const roleSubmenu = win.document.createElement("div");
+          roleSubmenu.className = "submenu";
+
+          const roles = getRolesForTheatre(theatre);
+
+          if (roles.length === 0) {
+            const empty = win.document.createElement("div");
+            empty.textContent = "[No roles found]";
+            empty.className = "submenu-item";
+            roleSubmenu.appendChild(empty);
+          } else {
+            roles.forEach(role => {
+              const roleDiv = win.document.createElement("div");
+              roleDiv.className = "submenu-item";
+              roleDiv.textContent = role;
+
+              roleDiv.addEventListener("click", () => {
+                const p = parsedRosterData[selectedIndex];
+                win.opener.postMessage({
+                  type: "allocateStaffToTheatre",
+                  person: p,
+                  theatre,
+                  role
+                }, "*");
+
+                // Clear selection highlight
+                win.document.querySelectorAll(".roster-row").forEach(r => r.classList.remove("highlighted"));
+                hideContextMenu();
+              });
+
+              roleSubmenu.appendChild(roleDiv);
+            });
+          }
+
+          theatreDiv.appendChild(roleSubmenu);
+        });
+
+        submenu.appendChild(theatreDiv);
+      });
+
+      div.appendChild(submenu);
     }
 
-    searchBtn.addEventListener('click', searchInventory);
-    searchBar.addEventListener('keydown', function(e) {
-      if (e.key === 'Enter') searchInventory();
-    });
-    searchBar.addEventListener('input', function() {
-      if (this.value.trim() === '') resultsDiv.innerHTML = '';
-    });
+    if (action === "Unallocate") {
+  div.addEventListener("click", () => {
+    const p = parsedRosterData[selectedIndex];
 
-    fetchInventory();
-  </script>
+    const oldTheatre = p.designation; // ✅ Save before clearing
 
+    // ✅ Clear local designation
+    p.designation = "";
+
+    // ✅ Re-render the popup view
+    renderRoster();
+
+    // ✅ Notify the main window to unassign this person from that theatre
+    win.opener.postMessage({
+      type: "unallocateStaffFromTheatre",
+      name: p.name,
+      theatre: oldTheatre
+    }, "*");
+
+    // ✅ Deselect and close context menu
+    win.document.querySelectorAll(".roster-row").forEach(r => r.classList.remove("highlighted"));
+    hideContextMenu();
+  });
+}
+
+
+    contextMenu.appendChild(div);
+  });
+
+  contextMenu.style.display = "block";
+  contextMenu.style.top = `${y}px`;
+  contextMenu.style.left = `${x}px`;
+}
+
+
+
+function getRolesForTheatre(theatre) {
+  return ["Scrub N/P", "HCA", "Anaes N/P", "Cell Salvage"];
+}
+    function hideContextMenu() {
+      contextMenu.style.display = "none";
+    }
+
+    function handleAction(action) {
+  if (selectedIndex === null) return;
+  const p = parsedRosterData[selectedIndex];
+
+  if (action === "Unallocate") {
+    if (!p.designation) return;
+
+    // ✅ Tell main window to unassign this person
+    win.opener.postMessage({
+      type: "unallocateStaffFromTheatre",
+      name: p.name,
+      theatre: p.designation
+    }, "*");
+
+   p.designation = "";
+   renderRoster();
+
+    win.document.querySelectorAll(".roster-row").forEach(r => r.classList.remove("highlighted"));
+    hideContextMenu();
+  }
+
+  }
+
+
+    win.document.addEventListener("click", hideContextMenu);
+    renderRoster();
+  }, 100);
+}
+
+function allocateStaff(index) {
+  const person = parsedRosterData[index];
+  alert(`Allocate ${person.name} as ${person.role} to a Theatre block`);
+}
+
+</script>
 </body>
 </html>
